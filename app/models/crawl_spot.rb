@@ -1,0 +1,2 @@
+class CrawlSpot < ApplicationRecord
+end

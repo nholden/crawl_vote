@@ -10,15 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_02_145123) do
+ActiveRecord::Schema.define(version: 2018_05_02_153528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "crawl_spots", force: :cascade do |t|
+    t.integer "crawl_id"
+    t.integer "spot_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crawl_id"], name: "index_crawl_spots_on_crawl_id"
+    t.index ["spot_id"], name: "index_crawl_spots_on_spot_id"
+  end
 
   create_table "crawls", force: :cascade do |t|
     t.string "slug"
     t.string "term"
     t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "spots", force: :cascade do |t|
+    t.float "rating"
+    t.string "price"
+    t.integer "review_count"
+    t.string "name"
+    t.string "url"
+    t.string "image_url"
+    t.string "city"
+    t.string "country"
+    t.string "address1"
+    t.string "address2"
+    t.string "address3"
+    t.string "state"
+    t.string "zip_code"
+    t.float "distance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
