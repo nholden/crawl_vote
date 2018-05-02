@@ -13,6 +13,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml'
+gem 'decent_exposure', '3.0.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'

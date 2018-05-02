@@ -1,0 +1,8 @@
+= form_with model: crawl do |f|
+  = f.label :term, 'Find'
+  = f.text_field :term
+
+  = f.label :location, 'Near'
+  = f.text_field :location
+
+  = f.submit 'Create Crawl'
