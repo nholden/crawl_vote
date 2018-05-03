@@ -14,6 +14,7 @@ RSpec.describe Yelp::BusinessSearch do
 
       Given(:business) { result.first }
       And { business.is_a? Yelp::Business }
+      And { business.id.present? }
       And { business.name == "Hugo's Cocina" }
       And { business.image_url.present? }
       And { business.url.present? }
