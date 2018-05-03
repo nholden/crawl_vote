@@ -1,1 +1,3 @@
 Creating crawl for #{crawl.term} in #{crawl.location}
+
+%pusher(:channel="'crawl-#{crawl.id}'" :event="'spots-created'")

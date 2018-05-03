@@ -27,6 +27,10 @@ class CrawlSpotWorker
     end
 
     crawl.save!
+
+    Pusher.trigger("crawl-#{crawl.id}", 'spots-created', {
+      message: 'success'
+    })
   end
 
 end

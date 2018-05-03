@@ -16,6 +16,7 @@ gem 'haml'
 gem 'decent_exposure', '3.0.0'
 gem 'excon'
 gem 'sidekiq'
+gem 'pusher'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
