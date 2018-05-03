@@ -1,5 +1,7 @@
 class CrawlSpotWorker
 
+  include Sidekiq::Worker
+
   def perform(crawl_id)
     crawl = Crawl.find(crawl_id)
     businesses = Yelp::BusinessSearch.new(term: crawl.term, location: crawl.location).businesses

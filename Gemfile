@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.2'
+ruby `cat .ruby-version`.chomp
 
 gem 'rails', '~> 5.2.0'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -15,6 +15,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml'
 gem 'decent_exposure', '3.0.0'
 gem 'excon'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'

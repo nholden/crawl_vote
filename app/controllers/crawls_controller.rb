@@ -3,7 +3,9 @@ class CrawlsController < ApplicationController
   expose :crawl
 
   def create
-    if crawl.save
+    if crawl.valid?
+      crawl.save!
+      CrawlSpotWorker.perform_async(crawl.id)
       redirect_to crawl_path(crawl)
     else
       render :new
