@@ -14,12 +14,14 @@ gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml'
 gem 'decent_exposure', '3.0.0'
+gem 'excon'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'pry'
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -31,4 +33,6 @@ end
 
 group :test do
   gem 'rspec-given'
+  gem 'webmock'
+  gem 'vcr'
 end
