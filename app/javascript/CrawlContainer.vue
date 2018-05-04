@@ -1,9 +1,7 @@
 <template>
   <div>
     <div v-if="crawlSpotsLoaded">
-      <div v-for="crawlSpot in crawlSpots">
-        {{ crawlSpot.spot.name }}
-      </div>
+      <crawl-spot v-for="crawlSpot in crawlSpots" :key="crawlSpot.id" :crawlSpot="crawlSpot" />
     </div>
     <div v-else>
       Finding {{ crawl.term }} in {{ crawl.location }}
@@ -14,6 +12,7 @@
 <script>
 import Pusher from 'pusher-js';
 import _ from 'lodash';
+import CrawlSpot from 'CrawlSpot'
 
 export default {
   props: {
@@ -48,6 +47,10 @@ export default {
     channel.bind('crawl-updated', (data) => {
       this.crawl = JSON.parse(data.message);
     });
+  },
+
+  components: {
+    CrawlSpot
   }
 }
 </script>
