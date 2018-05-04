@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root 'crawls#new'
   resources :crawls, only: [:new, :create, :show]
+  resources :votes, only: [:create]
 
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     # Protect against timing attacks:

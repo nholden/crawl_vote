@@ -1,5 +1,7 @@
 class CrawlsController < ApplicationController
 
+  before_action :find_or_create_user_uuid
+
   expose :crawl
 
   def create
@@ -13,6 +15,11 @@ class CrawlsController < ApplicationController
   end
 
   private
+
+  def find_or_create_user_uuid
+    session[:current_user_uuid] ||= SecureRandom.uuid
+    Current.user_uuid = session[:current_user_uuid]
+  end
 
   def crawl_params
     params.require(:crawl).permit(:term, :location)

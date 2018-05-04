@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="crawlSpotsLoaded">
-      <crawl-spot v-for="crawlSpot in crawlSpots" :key="crawlSpot.id" :crawlSpot="crawlSpot" />
+      <crawl-spot v-for="crawlSpot in crawlSpots"
+                  :key="crawlSpot.id"
+                  :crawlSpot="crawlSpot"
+                  v-on:vote="createCrawlSpotVote" />
     </div>
     <div v-else>
       Finding {{ crawl.term }} in {{ crawl.location }}
@@ -18,6 +21,9 @@ export default {
   props: {
     crawlInitial: {
       required: true
+    },
+    userUuid: {
+      required: true
     }
   },
 
@@ -31,6 +37,16 @@ export default {
     pusherChannelName: function() { return 'crawl-' + this.crawl.id },
     crawlSpots: function() { return this.crawl.crawl_spots },
     crawlSpotsLoaded: function() { return this.crawlSpots.length > 0 },
+  },
+
+  methods: {
+    createCrawlSpotVote: function(id) {
+      fetch('/votes', {
+        body: JSON.stringify({ vote: { crawl_spot_id: id, user_uuid: this.userUuid } }),
+        headers: { 'content-type': 'application/json' },
+        method: 'POST'
+      })
+    }
   },
 
   mounted: function() {
