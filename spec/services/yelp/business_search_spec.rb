@@ -18,7 +18,7 @@ RSpec.describe Yelp::BusinessSearch do
       And { business.name == "Hugo's Cocina" }
       And { business.image_url.present? }
       And { business.url.present? }
-      And { business.review_count == 169 }
+      And { business.review_count == 170 }
       And { business.rating == 4.5 }
       And { business.price == '$$' }
       And { business.address1 == '1830 Sunset Cliffs Blvd' }

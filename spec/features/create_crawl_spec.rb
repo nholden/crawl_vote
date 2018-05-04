@@ -13,7 +13,6 @@ RSpec.describe "create crawl" do
     expect(crawl.term).to eql 'Mexican'
     expect(crawl.location).to eql 'Ocean Beach, San Diego'
     expect(CrawlSpotWorker.jobs.count).to eql 1
-    expect(page).to have_text 'Creating crawl for Mexican in Ocean Beach, San Diego'
   end
 
 end

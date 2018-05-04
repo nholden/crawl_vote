@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'webmock/rspec'
 require 'sidekiq/testing'
+require "pusher-fake/support/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -63,4 +64,5 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.filter_sensitive_data("<YELP_API_KEY>") { ENV.fetch('YELP_API_KEY') }
+  config.ignore_localhost = true
 end

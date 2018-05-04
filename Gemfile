@@ -17,6 +17,7 @@ gem 'decent_exposure', '3.0.0'
 gem 'excon'
 gem 'sidekiq'
 gem 'pusher'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
@@ -37,4 +38,5 @@ group :test do
   gem 'rspec-given'
   gem 'webmock'
   gem 'vcr'
+  gem 'pusher-fake'
 end
