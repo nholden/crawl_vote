@@ -29,7 +29,7 @@ class CrawlSpotWorker
     crawl.save!
 
     Pusher.trigger("crawl-#{crawl.id}", 'crawl-updated', {
-      message: CrawlSerializer.new(crawl).to_json
+      message: 'Crawl updated!'
     })
   end
 

@@ -25,6 +25,13 @@ export default {
     }
   },
 
+  watch: {
+    crawlSpot: function() {
+      this.currentUserVoted = this.crawlSpot.current_user_vote_count > 0
+      this.voteCount = this.crawlSpot.vote_count
+    }
+  },
+
   methods: {
     vote: function() {
       this.$emit('vote', this.crawlSpot.id)

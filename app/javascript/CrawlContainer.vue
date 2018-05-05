@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Pusher from 'pusher-js';
-import _ from 'lodash';
+import Pusher from 'pusher-js'
+import _ from 'lodash'
 import CrawlSpot from 'CrawlSpot'
 
 export default {
@@ -46,23 +46,31 @@ export default {
         headers: { 'content-type': 'application/json' },
         method: 'POST'
       })
+    },
+
+    refreshCrawl: function() {
+      fetch('/crawls/' + this.crawl.id + '.json?user_uuid=' + this.userUuid).then((response) => {
+        return response.json()
+      }).then((data) => {
+        this.crawl = data
+      })
     }
   },
 
   mounted: function() {
     if (process.env.PUSHER_LOG_TO_CONSOLE == 'true') {
-      Pusher.logToConsole = true;
+      Pusher.logToConsole = true
     }
 
     var pusher = new Pusher(process.env.PUSHER_KEY, {
       cluster: process.env.PUSHER_CLUSTER,
       encrypted: true
-    });
+    })
 
-    var channel = pusher.subscribe(this.pusherChannelName);
+    var channel = pusher.subscribe(this.pusherChannelName)
     channel.bind('crawl-updated', (data) => {
-      this.crawl = JSON.parse(data.message);
-    });
+      this.refreshCrawl()
+    })
   },
 
   components: {

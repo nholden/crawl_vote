@@ -4,6 +4,13 @@ class CrawlsController < ApplicationController
 
   expose :crawl
 
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: crawl }
+    end
+  end
+
   def create
     if crawl.valid?
       crawl.save!
@@ -18,7 +25,7 @@ class CrawlsController < ApplicationController
 
   def find_or_create_user_uuid
     session[:current_user_uuid] ||= SecureRandom.uuid
-    Current.user_uuid = session[:current_user_uuid]
+    Current.user_uuid = params[:user_uuid] || session[:current_user_uuid]
   end
 
   def crawl_params

@@ -2,11 +2,12 @@ class VotesController < ApplicationController
 
   skip_forgery_protection
 
-  def create
-    vote = Vote.new(vote_params)
+  expose :vote
 
+  def create
     response = if vote.valid?
                  vote.save!
+                 trigger_crawl_update
                  { json: vote, status: :created }
                else
                  { json: vote.errors, status: :bad_request }
@@ -19,6 +20,12 @@ class VotesController < ApplicationController
 
   def vote_params
     params.require(:vote).permit(:user_uuid, :crawl_spot_id)
+  end
+
+  def trigger_crawl_update
+    Pusher.trigger("crawl-#{vote.crawl.id}", 'crawl-updated', {
+      message: 'Crawl updated!'
+    })
   end
 
 end
