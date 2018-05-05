@@ -1,7 +1,12 @@
 <template>
   <div>
-    {{ crawlSpot.spot.name }}
-    <a href="#" v-on:click.prevent="vote">Vote</a>
+    {{ crawlSpot.spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
+    <span v-if="currentUserVoted">
+      Voted
+    </span>
+    <span v-else>
+      <a href="#" v-on:click.prevent="vote">Vote</a>
+    </span>
   </div>
 </template>
 
@@ -13,8 +18,29 @@ export default {
     }
   },
 
+  data: function() {
+    return {
+      currentUserVoted: this.crawlSpot.current_user_vote_count > 0,
+      voteCount: this.crawlSpot.vote_count
+    }
+  },
+
   methods: {
-    vote: function() { this.$emit('vote', this.crawlSpot.id) }
+    vote: function() {
+      this.$emit('vote', this.crawlSpot.id)
+      this.currentUserVoted = true
+      this.voteCount += 1
+    }
+  },
+
+  filters: {
+    pluralize: function(name, count) {
+      if (count === 1) {
+        return name
+      } else {
+        return name + 's'
+      }
+    }
   }
 }
 </script>
