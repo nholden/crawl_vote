@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_04_150908) do
+ActiveRecord::Schema.define(version: 2018_05_06_185600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_05_04_150908) do
   end
 
   create_table "crawls", force: :cascade do |t|
-    t.string "slug"
+    t.string "token"
     t.string "term"
     t.string "location"
     t.datetime "created_at", null: false
@@ -46,10 +46,16 @@ ActiveRecord::Schema.define(version: 2018_05_04_150908) do
     t.string "address3"
     t.string "state"
     t.string "zip_code"
-    t.decimal "distance", precision: 20, scale: 15
+    t.decimal "distance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "yelp_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "votes", force: :cascade do |t|
