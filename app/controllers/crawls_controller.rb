@@ -2,7 +2,7 @@ class CrawlsController < ApplicationController
 
   before_action :find_or_create_user_uuid
 
-  expose :crawl
+  expose :crawl, id: :token, find_by: :token
 
   def show
     respond_to do |format|

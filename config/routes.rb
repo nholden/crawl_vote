@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
 
   root 'crawls#new'
-  resources :crawls, only: [:new, :create, :show]
+  resources :crawls, only: [:new, :create, :show], param: :token
   resources :votes, only: [:create]
 
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|

@@ -5,6 +5,11 @@ class Crawl < ApplicationRecord
 
   before_create :generate_token
 
+  def to_param
+    # https://hackernoon.com/using-custom-slugs-for-rails-urls-500eb3f58f3c
+    token
+  end
+
   private
 
   def generate_token
