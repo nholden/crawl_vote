@@ -7,6 +7,7 @@
     "lodash": "^4.17.10",
     "pusher-js": "^4.2.2",
     "vue": "^2.5.16",
+    "vue-clipboard2": "^0.1.0",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "^2.5.16",
     "vue-turbolinks": "^2.0.3"

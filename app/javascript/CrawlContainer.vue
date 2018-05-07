@@ -9,6 +9,11 @@
     <div v-else>
       Finding {{ crawl.term }} in {{ crawl.location }}
     </div>
+    <hr />
+    <div>
+      Invite friends to vote using token {{ crawl.token }}
+      <button type="button" v-clipboard:copy="shareUrl">Copy link</button>
+    </div>
   </div>
 </template>
 
@@ -37,6 +42,7 @@ export default {
     pusherChannelName: function() { return 'crawl-' + this.crawl.id },
     crawlSpots: function() { return this.crawl.crawl_spots },
     crawlSpotsLoaded: function() { return this.crawlSpots.length > 0 },
+    shareUrl: function() { return process.env.BASE_URL + '/crawls/' + this.crawl.token }
   },
 
   methods: {
