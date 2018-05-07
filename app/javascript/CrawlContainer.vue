@@ -39,7 +39,7 @@ export default {
   },
 
   computed: {
-    pusherChannelName: function() { return 'crawl-' + this.crawl.id },
+    pusherChannelName: function() { return 'crawl-' + this.crawl.token },
     crawlSpots: function() { return this.crawl.crawl_spots },
     crawlSpotsLoaded: function() { return this.crawlSpots.length > 0 },
     shareUrl: function() { return process.env.BASE_URL + '/crawls/' + this.crawl.token }

@@ -23,7 +23,7 @@ class VotesController < ApplicationController
   end
 
   def trigger_crawl_update
-    Pusher.trigger("crawl-#{vote.crawl.id}", 'crawl-updated', {
+    Pusher.trigger("crawl-#{vote.crawl.token}", 'crawl-updated', {
       message: 'Crawl updated!'
     })
   end

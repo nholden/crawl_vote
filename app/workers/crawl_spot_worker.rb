@@ -28,7 +28,7 @@ class CrawlSpotWorker
 
     crawl.save!
 
-    Pusher.trigger("crawl-#{crawl.id}", 'crawl-updated', {
+    Pusher.trigger("crawl-#{crawl.token}", 'crawl-updated', {
       message: 'Crawl updated!'
     })
   end
