@@ -65,8 +65,10 @@ class TokenPhrase
     gimlet
   )
 
+  NUMBERS = (10..99).to_a
+
   def self.generate
-    "#{ADJECTIVES.sample}-#{NOUNS.sample}"
+    [ADJECTIVES, NOUNS, NUMBERS].map(&:sample).join
   end
 
 end
