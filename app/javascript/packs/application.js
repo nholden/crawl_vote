@@ -2,6 +2,7 @@ import TurbolinksAdapter from 'vue-turbolinks';
 import Vue from 'vue/dist/vue.esm'
 import CrawlContainer from '../CrawlContainer'
 import VueClipboard from 'vue-clipboard2'
+import '../stylesheets/application.scss'
 
 Vue.use(TurbolinksAdapter)
 Vue.use(VueClipboard)
