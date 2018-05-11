@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.max-w-lg.mx-auto.p-4.text-black
   div(v-if="crawlSpotsLoaded")
     crawl-spot(v-for="crawlSpot in crawlSpots"
                :key="crawlSpot.id"
@@ -8,10 +8,11 @@ div
   div(v-else)
     | Finding {{ crawl.term }} in {{ crawl.location }}
   hr
-  div
-    | Invite friends to vote using token {{ crawl.token }}
-    |
-    button(type="button" v-clipboard:copy="shareUrl") Copy link
+  .text-center
+    .py-4
+      | Invite friends to vote using token <strong>{{ crawl.token }}</strong>
+    button.btn.btn--active.w-full(type="button" v-clipboard:copy="shareUrl")
+      | Copy voting share link
 </template>
 
 <script>

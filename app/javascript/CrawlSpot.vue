@@ -1,9 +1,12 @@
 <template lang="pug">
-div
+.py-2
   | {{ crawlSpot.spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
   |
-  span(v-if="currentUserVoted") Voted
-  span(v-else): a(href="#" v-on:click.prevent="vote") Vote
+  .py-1
+    button.btn.btn--disabled(v-if="currentUserVoted" disabled)
+      | Voted
+    button.btn.btn--active(v-else v-on:click.prevent="vote")
+      | Vote
 </template>
 
 <script>

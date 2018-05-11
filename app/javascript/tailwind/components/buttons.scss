@@ -1,0 +1,15 @@
+.btn {
+  @apply .py-3 .px-4 .rounded .tracking-wide .uppercase .font-light .bg-blue .text-white
+}
+
+.btn--active {
+  @apply .cursor-pointer
+}
+
+.btn--active:hover {
+  @apply .bg-blue-dark
+}
+
+.btn--disabled {
+  @apply .opacity-50 .cursor-default
+}
