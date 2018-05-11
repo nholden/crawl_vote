@@ -5,6 +5,8 @@
     "@rails/webpacker": "3.5",
     "dotenv": "^5.0.1",
     "lodash": "^4.17.10",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
     "pusher-js": "^4.2.2",
     "rails-ujs": "^5.2.0",
     "tailwindcss": "^0.5.3",

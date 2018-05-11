@@ -1,13 +1,9 @@
-<template>
-  <div>
-    {{ crawlSpot.spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
-    <span v-if="currentUserVoted">
-      Voted
-    </span>
-    <span v-else>
-      <a href="#" v-on:click.prevent="vote">Vote</a>
-    </span>
-  </div>
+<template lang="pug">
+div
+  | {{ crawlSpot.spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
+  |
+  span(v-if="currentUserVoted") Voted
+  span(v-else): a(href="#" v-on:click.prevent="vote") Vote
 </template>
 
 <script>

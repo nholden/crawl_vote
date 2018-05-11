@@ -1,20 +1,17 @@
-<template>
-  <div>
-    <div v-if="crawlSpotsLoaded">
-      <crawl-spot v-for="crawlSpot in crawlSpots"
-                  :key="crawlSpot.id"
-                  :crawlSpot="crawlSpot"
-                  v-on:vote="createCrawlSpotVote" />
-    </div>
-    <div v-else>
-      Finding {{ crawl.term }} in {{ crawl.location }}
-    </div>
-    <hr />
-    <div>
-      Invite friends to vote using token {{ crawl.token }}
-      <button type="button" v-clipboard:copy="shareUrl">Copy link</button>
-    </div>
-  </div>
+<template lang="pug">
+div
+  div(v-if="crawlSpotsLoaded")
+    crawl-spot(v-for="crawlSpot in crawlSpots"
+               :key="crawlSpot.id"
+               :crawlSpot="crawlSpot"
+               v-on:vote="createCrawlSpotVote")
+  div(v-else)
+    | Finding {{ crawl.term }} in {{ crawl.location }}
+  hr
+  div
+    | Invite friends to vote using token {{ crawl.token }}
+    |
+    button(type="button" v-clipboard:copy="shareUrl") Copy link
 </template>
 
 <script>
