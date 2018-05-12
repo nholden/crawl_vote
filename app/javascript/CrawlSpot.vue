@@ -1,7 +1,12 @@
 <template lang="pug">
 .py-2
-  | {{ crawlSpot.spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
-  |
+  div: img(:src="spot.image_url" width="auto" height="auto" style="max-width: 100px;")
+  div {{ spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
+  div {{ address }}
+  div: img(:src="yelpStarsPath")
+  div Based on {{ spot.review_count }} reviews
+  div: a(:href="spot.url" target="_blank")
+    img(src="./images/yelp_logo.png" width="auto" height="auto" style="max-width: 100px;")
   .py-1
     button.btn.btn--disabled(v-if="currentUserVoted" disabled)
       | Voted
@@ -10,10 +15,22 @@
 </template>
 
 <script>
+const yelpStarsContextModule = require.context('./images/yelp_stars', true, /\.png$/)
+
 export default {
   props: {
     crawlSpot: {
       required: true
+    }
+  },
+
+  computed: {
+    spot: function() { return this.crawlSpot.spot },
+    address: function() {
+      return _.join(_.compact([this.spot.address1, this.spot.city, this.spot.state]), ', ')
+    },
+    yelpStarsPath: function() {
+      return yelpStarsContextModule('./' + this.spot.rating.toString().replace('.', '_') + '.png')
     }
   },
 
