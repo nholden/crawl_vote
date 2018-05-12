@@ -1,12 +1,20 @@
 <template lang="pug">
-.py-2
-  div: img(:src="spot.image_url" width="auto" height="auto" style="max-width: 100px;")
-  div {{ spot.name }} ({{ voteCount }} {{ 'vote' | pluralize(voteCount) }})
-  div {{ address }}
-  div: img(:src="yelpStarsPath")
-  div Based on {{ spot.review_count }} reviews
-  div: a(:href="spot.url" target="_blank")
-    img(src="./images/yelp_logo.png" width="auto" height="auto" style="max-width: 100px;")
+.py-4
+  .flex.items-center
+    .pr-2
+     | {{ voteCount }}
+    .pr-2
+      img(:src="spot.image_url" width="auto" height="auto" style="max-width: 100px;")
+    div
+      .font-medium.text-blue.text-lg.uppercase.tracking-wide.pb-2 {{ spot.name }}
+      .pb-1 {{ address }}
+      .flex.items-center
+        .pr-2
+          .pb-1: img.inline-block.align-middle(:src="yelpStarsPath" width="auto" height="24")
+          .text-sm.text-grey-darker Based on {{ spot.review_count }} reviews
+        div
+          a(:href="spot.url" target="_blank")
+            img.inline-block.align-middle(src="./images/yelp_logo.png" width="auto" height="68")
   .py-1
     button.btn.btn--disabled(v-if="currentUserVoted" disabled)
       | Voted
@@ -55,15 +63,5 @@ export default {
       this.voteCount += 1
     }
   },
-
-  filters: {
-    pluralize: function(name, count) {
-      if (count === 1) {
-        return name
-      } else {
-        return name + 's'
-      }
-    }
-  }
 }
 </script>
