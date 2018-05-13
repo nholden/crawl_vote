@@ -1,25 +1,30 @@
 <template lang="pug">
-.py-4
+.py-6
   .flex.items-center
-    .pr-2
-     | {{ voteCount }}
-    .pr-2
-      img(:src="spot.image_url" width="auto" height="auto" style="max-width: 100px;")
-    div
-      .font-medium.text-blue.text-lg.uppercase.tracking-wide.pb-2 {{ spot.name }}
-      .pb-1 {{ address }}
-      .flex.items-center
-        .pr-2
-          .pb-1: img.inline-block.align-middle(:src="yelpStarsPath" width="auto" height="24")
-          .text-sm.text-grey-darker Based on {{ spot.review_count }} reviews
+    .flex-no-shrink.w-16.text-center
+      .pb-3
+        .text-xl.font-medium
+          | {{ voteCount }}
+        .text-xs.uppercase.tracking-wide
+          | {{ 'vote' | pluralize(voteCount) }}
+      div
+        button.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-default.text-lg(v-if="currentUserVoted" disabled)
+          | ✔
+        button.py-2.px-2.rounded.font-light.bg-grey.text-white.cursor-pointer.opacity-50.text-lg(v-else v-on:click.prevent="vote" class="hover:bg-green")
+          | ✔
+    .flex-no-shrink.pr-4
+      .h-32.w-32(:style="{ 'background-image': 'url(' + spot.image_url + ')' }"
+                 style="background-repeat: no-repeat; background-position: 50% 50%; background-size: cover;")
+    .flex-grow
+      .font-medium.text-blue.uppercase.tracking-wide.pb-1 {{ spot.name }}
+      .text-sm.pb-2 {{ address }}
+      .flex.flex-wrap.items-center.justify-center
         div
           a(:href="spot.url" target="_blank")
-            img.inline-block.align-middle(src="./images/yelp_logo.png" width="auto" height="68")
-  .py-1
-    button.btn.btn--disabled(v-if="currentUserVoted" disabled)
-      | Voted
-    button.btn.btn--active(v-else v-on:click.prevent="vote")
-      | Vote
+            img.inline-block.align-middle(src="./images/yelp_logo.png" width="106" height="68")
+        .text-center
+          .pb-1: img.inline-block.align-middle(:src="yelpStarsPath" width="132" height="24")
+          .text-sm.text-grey-darker Based on {{ spot.review_count }} reviews
 </template>
 
 <script>
@@ -63,5 +68,15 @@ export default {
       this.voteCount += 1
     }
   },
+
+  filters: {
+    pluralize: function(word, count) {
+      if (count == 1) {
+        return word
+      } else {
+        return word + 's'
+      }
+    }
+  }
 }
 </script>

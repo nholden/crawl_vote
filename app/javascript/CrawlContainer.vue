@@ -1,5 +1,5 @@
 <template lang="pug">
-.max-w-lg.mx-auto.p-4.text-black
+.max-w-md.mx-auto.p-2.text-black
   div(v-if="crawlSpotsLoaded")
     crawl-spot(v-for="crawlSpot in crawlSpots"
                :key="crawlSpot.id"
