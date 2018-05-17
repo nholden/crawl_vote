@@ -28,7 +28,6 @@ RSpec.describe Yelp::BusinessSearch do
       And { business.state == 'CA' }
       And { business.zip_code == '92107' }
       And { business.country == 'US' }
-      And { business.distance == 745.5116479424057 }
     end
   end
 

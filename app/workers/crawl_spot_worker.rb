@@ -21,7 +21,6 @@ class CrawlSpotWorker
       spot.state = business.state
       spot.zip_code = business.zip_code
       spot.country = business.country
-      spot.distance = business.distance.to_d
       spot.save! if spot.changed?
       crawl.spots << spot
     end

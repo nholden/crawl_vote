@@ -25,7 +25,6 @@ RSpec.describe CrawlSpotWorker do
     And { spot.state == 'CA' }
     And { spot.zip_code == '92107' }
     And { spot.country == 'US' }
-    And { spot.distance.present? }
   end
 
 end

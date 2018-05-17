@@ -13,6 +13,5 @@ FactoryBot.define do
     address3 "MyString"
     state "MyString"
     zip_code "MyString"
-    distance 1.5
   end
 end

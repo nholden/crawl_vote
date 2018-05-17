@@ -61,9 +61,5 @@ module Yelp
       @data.dig('location', 'country')
     end
 
-    def distance
-      @data['distance']
-    end
-
   end
 end

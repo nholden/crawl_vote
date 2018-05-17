@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_06_185600) do
+ActiveRecord::Schema.define(version: 2018_05_17_151945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2018_05_06_185600) do
     t.string "address3"
     t.string "state"
     t.string "zip_code"
-    t.decimal "distance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "yelp_id"
