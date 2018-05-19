@@ -1,6 +1,8 @@
 class VotesController < ApplicationController
 
   skip_forgery_protection
+
+  include Authenticatable
   before_action :authenticate
 
   expose :vote
@@ -18,12 +20,6 @@ class VotesController < ApplicationController
   end
 
   private
-
-  def authenticate
-    authenticate_or_request_with_http_token do |token, options|
-      Current.user_uuid = token
-    end
-  end
 
   def vote_params
     params.require(:vote).permit(:crawl_spot_id).merge(user_uuid: Current.user_uuid)
