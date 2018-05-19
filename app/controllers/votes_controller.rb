@@ -21,12 +21,12 @@ class VotesController < ApplicationController
 
   def authenticate
     authenticate_or_request_with_http_token do |token, options|
-      @user_uuid = token
+      Current.user_uuid = token
     end
   end
 
   def vote_params
-    params.require(:vote).permit(:crawl_spot_id).merge(user_uuid: @user_uuid)
+    params.require(:vote).permit(:crawl_spot_id).merge(user_uuid: Current.user_uuid)
   end
 
   def trigger_crawl_update

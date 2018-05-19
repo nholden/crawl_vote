@@ -1,6 +1,6 @@
 class CrawlsController < ApplicationController
 
-  before_action :find_or_create_user_uuid
+  before_action :authenticate
 
   expose :crawl, id: :token, find_by: :token
 
@@ -23,9 +23,19 @@ class CrawlsController < ApplicationController
 
   private
 
-  def find_or_create_user_uuid
-    session[:current_user_uuid] ||= SecureRandom.uuid
-    Current.user_uuid = params[:user_uuid] || session[:current_user_uuid]
+  def authenticate
+    respond_to do |format|
+      format.html do
+        session[:current_user_uuid] ||= SecureRandom.uuid
+        Current.user_uuid = session[:current_user_uuid]
+      end
+
+      format.json do
+        authenticate_or_request_with_http_token do |token, options|
+          Current.user_uuid = token
+        end
+      end
+    end
   end
 
   def crawl_params

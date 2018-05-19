@@ -56,7 +56,12 @@ export default {
     },
 
     refreshCrawl: function() {
-      fetch('/crawls/' + this.crawl.token + '.json?user_uuid=' + this.userUuid).then((response) => {
+      fetch('/crawls/' + this.crawl.token + '.json', {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + this.userUuid
+        }
+      }).then((response) => {
         return response.json()
       }).then((data) => {
         this.crawl = data
