@@ -46,8 +46,11 @@ export default {
   methods: {
     createCrawlSpotVote: function(id) {
       fetch('/votes', {
-        body: JSON.stringify({ vote: { crawl_spot_id: id, user_uuid: this.userUuid } }),
-        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ vote: { crawl_spot_id: id } }),
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + this.userUuid
+        },
         method: 'POST'
       })
     },
