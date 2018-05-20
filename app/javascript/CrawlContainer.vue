@@ -4,7 +4,8 @@
     crawl-spot(v-for="crawlSpot in crawlSpots"
                :key="crawlSpot.id"
                :crawlSpot="crawlSpot"
-               v-on:vote="createCrawlSpotVote")
+               v-on:vote="createCrawlSpotVote"
+               v-on:deleteVote="deleteVote")
   div(v-else)
     | Finding {{ crawl.term }} in {{ crawl.location }}
   hr
@@ -52,6 +53,16 @@ export default {
           Authorization: 'Bearer ' + this.userUuid
         },
         method: 'POST'
+      })
+    },
+
+    deleteVote: function(id) {
+      fetch('/votes/' + id, {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + this.userUuid
+        },
+        method: 'DELETE'
       })
     },
 

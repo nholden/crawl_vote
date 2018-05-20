@@ -22,6 +22,7 @@ class VotesController < ApplicationController
   def destroy
     if vote.user_uuid == Current.user_uuid
       vote.destroy
+      trigger_crawl_update
       head :no_content
     else
       render plain: 'Forbidden: Vote does not belong to current user.', status: :forbidden

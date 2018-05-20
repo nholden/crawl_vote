@@ -8,7 +8,7 @@
         .text-xs.uppercase.tracking-wide
           | {{ 'vote' | pluralize(voteCount) }}
       div
-        button.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-default.text-lg(v-if="currentUserVoted" disabled)
+        button.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-pointer.text-lg(v-if="currentUserVoted" v-on:click.prevent="deleteVote" class="hover:opacity-50")
           | ✔
         button.py-2.px-2.rounded.font-light.bg-grey.text-white.cursor-pointer.opacity-50.text-lg(v-else v-on:click.prevent="vote" class="hover:bg-green")
           | ✔
@@ -66,6 +66,12 @@ export default {
       this.$emit('vote', this.crawlSpot.id)
       this.currentUserVoted = true
       this.voteCount += 1
+    },
+
+    deleteVote: function() {
+      this.$emit('deleteVote', this.crawlSpot.current_user_vote.id)
+      this.currentUserVoted = false
+      this.voteCount -= 1
     }
   },
 
