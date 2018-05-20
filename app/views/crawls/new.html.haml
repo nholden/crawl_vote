@@ -6,13 +6,20 @@
         Does your group need help picking a next stop?
         Tell us where you’re going and what kind of place you’re
         looking for, and we’ll give you some suggestions to vote on.
-    %div(class="w-full md:w-2/3 p-4")
-      = form_with model: crawl do |f|
-        .pb-4
-          = f.label :term, 'Find', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
-          = f.text_field :term, class: 'shadow appearance-none border rounded w-full py-2 px-3'
-        .pb-4
-          = f.label :location, 'Near', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
-          = f.text_field :location, class: 'shadow appearance-none border rounded w-full py-2 px-3'
-        .pt-2
-          = f.submit 'Create Crawl', class: 'btn btn--active w-full'
+    %two-tabs(class="w-full md:w-2/3 p-4")
+      %template(slot="firstTabTitle")
+        Create a crawl
+      %template(slot="firstTabContent")
+        = form_with model: crawl do |f|
+          .pb-4
+            = f.label :term, 'Find', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
+            = f.text_field :term, class: 'shadow appearance-none border rounded w-full py-2 px-3'
+          .pb-4
+            = f.label :location, 'Near', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
+            = f.text_field :location, class: 'shadow appearance-none border rounded w-full py-2 px-3'
+          .pt-2
+            = f.submit 'Create Crawl', class: 'btn btn--active w-full'
+      %template(slot="secondTabTitle")
+        Join a crawl
+      %template(slot="secondTabContent")
+        %join-crawl-form
