@@ -1,6 +1,10 @@
 .tab {
-  @apply .bg-white .inline-block .py-2 .px-4 .font-medium .text-sm .text-blue-light .uppercase .tracking-wide;
+  @apply .bg-white .inline-block .py-2 .px-4 .font-medium .text-xs .text-blue-light .uppercase .tracking-wide;
 
+  @screen md {
+    @apply .text-sm;
+  }
+  
   &--selected {
     @apply .border-l .border-t .border-r .rounded-t .font-semibold;
   }
