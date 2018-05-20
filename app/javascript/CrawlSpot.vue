@@ -49,14 +49,14 @@ export default {
 
   data: function() {
     return {
-      currentUserVoted: this.crawlSpot.current_user_vote_count > 0,
+      currentUserVoted: !!(this.crawlSpot.current_user_vote),
       voteCount: this.crawlSpot.vote_count
     }
   },
 
   watch: {
     crawlSpot: function() {
-      this.currentUserVoted = this.crawlSpot.current_user_vote_count > 0
+      this.currentUserVoted = !!(this.crawlSpot.current_user_vote)
       this.voteCount = this.crawlSpot.vote_count
     }
   },
