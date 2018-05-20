@@ -1,11 +1,12 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
   div(v-if="crawlSpotsLoaded")
-    crawl-spot(v-for="crawlSpot in crawlSpots"
-               :key="crawlSpot.id"
-               :crawlSpot="crawlSpot"
-               v-on:vote="createCrawlSpotVote"
-               v-on:deleteVote="deleteVote")
+    transition-group(name="crawl-spot-list")
+      crawl-spot(v-for="crawlSpot in crawlSpots"
+                 :key="crawlSpot.id"
+                 :crawlSpot="crawlSpot"
+                 v-on:vote="createCrawlSpotVote"
+                 v-on:deleteVote="deleteVote")
   div(v-else)
     | Finding {{ crawl.term }} in {{ crawl.location }}
   hr
@@ -101,3 +102,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.crawl-spot-list-move {
+  transition: transform 1s;
+}
+</style>
