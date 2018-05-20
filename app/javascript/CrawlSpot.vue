@@ -4,9 +4,9 @@
     .flex-no-shrink.w-16.text-center
       .pb-3
         .text-xl.font-medium
-          | {{ voteCount }}
+          | {{ votesCount }}
         .text-xs.uppercase.tracking-wide
-          | {{ 'vote' | pluralize(voteCount) }}
+          | {{ 'vote' | pluralize(votesCount) }}
       div
         button.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-pointer.text-lg(v-if="currentUserVoted" v-on:click.prevent="deleteVote" class="hover:opacity-50")
           | ✔
@@ -50,14 +50,14 @@ export default {
   data: function() {
     return {
       currentUserVoted: !!(this.crawlSpot.current_user_vote),
-      voteCount: this.crawlSpot.vote_count
+      votesCount: this.crawlSpot.votes_count
     }
   },
 
   watch: {
     crawlSpot: function() {
       this.currentUserVoted = !!(this.crawlSpot.current_user_vote)
-      this.voteCount = this.crawlSpot.vote_count
+      this.votesCount = this.crawlSpot.votes_count
     }
   },
 
@@ -65,13 +65,13 @@ export default {
     vote: function() {
       this.$emit('vote', this.crawlSpot.id)
       this.currentUserVoted = true
-      this.voteCount += 1
+      this.votesCount += 1
     },
 
     deleteVote: function() {
       this.$emit('deleteVote', this.crawlSpot.current_user_vote.id)
       this.currentUserVoted = false
-      this.voteCount -= 1
+      this.votesCount -= 1
     }
   },
 

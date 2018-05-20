@@ -1,6 +1,6 @@
 class Vote < ApplicationRecord
 
-  belongs_to :crawl_spot
+  belongs_to :crawl_spot, counter_cache: true
   has_one :crawl, through: :crawl_spot
 
   validates :user_uuid,
