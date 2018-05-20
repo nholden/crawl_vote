@@ -95,6 +95,8 @@ export default {
     channel.bind('crawl-updated', (data) => {
       this.refreshCrawl()
     })
+
+    this.refreshCrawl()
   },
 
   components: {
