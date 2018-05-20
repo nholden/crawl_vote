@@ -12,13 +12,13 @@ RSpec.describe CrawlSpotWorker do
 
     Given(:spot) { crawl.spots.first }
     And { spot.yelp_id.present? }
-    And { spot.name == "Hugo's Cocina" }
+    And { spot.name == "Mike's Taco Club" }
     And { spot.image_url.present? }
     And { spot.url.present? }
-    And { spot.review_count == 170 }
+    And { spot.review_count == 542 }
     And { spot.rating == 4.5 }
-    And { spot.price == '$$' }
-    And { spot.address1 == '1830 Sunset Cliffs Blvd' }
+    And { spot.price == '$' }
+    And { spot.address1 == '5060 Newport Ave' }
     And { spot.address2.nil? }
     And { spot.address3.nil? }
     And { spot.city == 'San Diego' }
