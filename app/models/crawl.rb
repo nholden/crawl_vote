@@ -1,6 +1,6 @@
 class Crawl < ApplicationRecord
 
-  has_many :crawl_spots
+  has_many :crawl_spots, -> { joins(:spot).order('crawl_spots.votes_count desc, spots.rating desc, spots.review_count desc') }
   has_many :spots, through: :crawl_spots
 
   before_create :generate_token
