@@ -19,6 +19,15 @@ class VotesController < ApplicationController
     render response
   end
 
+  def destroy
+    if vote.user_uuid == Current.user_uuid
+      vote.destroy
+      head :no_content
+    else
+      render plain: 'Forbidden: Vote does not belong to current user.', status: :forbidden
+    end
+  end
+
   private
 
   def vote_params

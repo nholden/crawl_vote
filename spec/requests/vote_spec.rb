@@ -46,4 +46,30 @@ RSpec.describe "votes" do
     expect(JSON.parse(response.body)['user_uuid']).to include "already has a vote for crawl_spot_id"
   end
 
+  scenario "successfully deleting a vote" do
+    vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid)
+    delete vote_path(vote),
+           headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
+
+    expect(Vote.find_by_id(vote.id)).to be_nil
+    expect(crawl_spot.votes.count).to eql 0
+    expect(response.status).to eql 204
+  end
+
+  scenario "attempting to delete a vote that doesn't belong to current user" do
+    vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: 'other-user-uuid')
+    delete vote_path(vote),
+           headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
+
+    expect(Vote.find_by_id(vote.id)).to be_present
+    expect(crawl_spot.votes.count).to eql 1
+    expect(response.status).to eql 403
+    expect(response.body).to include 'Forbidden: Vote does not belong to current user.'
+  end
+
+  scenario "attempting to delete a vote that doesn't exist" do
+    expect { delete vote_path(id: 1234), headers: { 'Authorization': "Bearer \"#{user_uuid}\"" } }.
+      to raise_error ActiveRecord::RecordNotFound
+  end
+
 end
