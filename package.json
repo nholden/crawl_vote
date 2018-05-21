@@ -1,5 +1,5 @@
 {
-  "name": "where_to_crawl",
+  "name": "crawl_vote",
   "private": true,
   "dependencies": {
     "@rails/webpacker": "3.5",

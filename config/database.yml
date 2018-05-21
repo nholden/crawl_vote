@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  database: where_to_crawl_development
+  database: crawl_vote_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: where_to_crawl
+  #username: crawl_vote
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,29 +57,4 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: where_to_crawl_test
-
-# As with config/secrets.yml, you never want to store sensitive information,
-# like your database password, in your source code. If your source code is
-# ever seen by anyone, they now have access to your database.
-#
-# Instead, provide the password as a unix environment variable when you boot
-# the app. Read http://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full rundown on how to provide these environment variables in a
-# production deployment.
-#
-# On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
-#
-#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
-#
-# You can use this database configuration with:
-#
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
-production:
-  <<: *default
-  database: where_to_crawl_production
-  username: where_to_crawl
-  password: <%= ENV['WHERE_TO_CRAWL_DATABASE_PASSWORD'] %>
+  database: crawl_vote_test
