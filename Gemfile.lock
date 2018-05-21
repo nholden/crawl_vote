@@ -184,6 +184,8 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (4.0.1)
+    rollbar (2.16.0)
+      multi_json
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -280,6 +282,7 @@ DEPENDENCIES
   pusher
   pusher-fake
   rails (~> 5.2.0)
+  rollbar
   rspec-given
   rspec-rails (~> 3.7)
   sidekiq

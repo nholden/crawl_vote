@@ -15,6 +15,7 @@ gem 'excon'
 gem 'sidekiq'
 gem 'pusher'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'rollbar'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
