@@ -1,22 +1,23 @@
 <template lang="pug">
-.py-6
-  .flex.items-center
-    .flex-no-shrink.w-16.text-center
-      .pb-3
+.py-4
+  .flex.flex-wrap-reverse.items-stretch.p-4.border.rounded.shadow-md.bg-white
+    .flex.flex-wrap.pr-4.text-center(class="w-full md:w-1/6 pt-4 md:pt-0 my-0 md:my-4")
+      .pb-3(class="w-1/3 md:w-full")
         .text-xl.font-medium
           | {{ votesCount }}
         .text-xs.uppercase.tracking-wide
           | {{ 'vote' | pluralize(votesCount) }}
-      div
-        button.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-pointer.text-lg(v-if="currentUserVoted" v-on:click.prevent="deleteVote" class="hover:opacity-50")
+      div(class="w-2/3 md:w-full")
+        button.w-full.py-2.px-2.rounded.font-light.bg-green.text-white.cursor-pointer.text-lg(v-if="currentUserVoted" v-on:click.prevent="deleteVote" class="hover:opacity-50")
           | ✔
-        button.py-2.px-2.rounded.font-light.bg-grey.text-white.cursor-pointer.opacity-50.text-lg(v-else v-on:click.prevent="vote" class="hover:bg-green")
+        button.w-full.py-2.px-2.rounded.font-light.bg-grey.text-white.cursor-pointer.opacity-50.text-lg(v-else v-on:click.prevent="vote" class="hover:bg-green")
           | ✔
-    .flex-no-shrink.pr-4
-      .h-32.w-32(:style="{ 'background-image': 'url(' + spot.image_url + ')' }"
+    .pr-4(class="w-1/2 md:w-1/3")
+      .h-full(:style="{ 'background-image': 'url(' + spot.image_url + ')' }"
                  style="background-repeat: no-repeat; background-position: 50% 50%; background-size: cover;")
-    .flex-grow
-      .font-medium.text-blue.uppercase.tracking-wide.pb-1 {{ spot.name }}
+    div(class="w-1/2")
+      .font-medium.text-blue.uppercase.tracking-wide.pb-1(class="text-sm md:text-base")
+        | {{ spot.name }}
       .text-sm.pb-2 {{ address }}
       .flex.flex-wrap.items-center.justify-center
         div

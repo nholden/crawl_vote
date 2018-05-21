@@ -12,9 +12,9 @@
   hr
   .text-center
     .py-4
-      | Invite friends to vote using token <strong>{{ crawl.token }}</strong>
+      | Invite friends to vote using code <strong>{{ crawl.token }}</strong>
     button.btn.btn--active.w-full(type="button" v-clipboard:copy="shareUrl")
-      | Copy voting share link
+      | Copy share link
 </template>
 
 <script>
