@@ -1,19 +1,20 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
-  div(v-if="crawlSpotsLoaded")
-    transition-group(name="crawl-spot-list")
-      crawl-spot(v-for="crawlSpot in crawlSpots"
-                 :key="crawlSpot.id"
-                 :crawlSpot="crawlSpot"
-                 v-on:vote="createCrawlSpotVote"
-                 v-on:deleteVote="deleteVote")
-  div(v-else)
-    | Finding {{ crawl.term }} in {{ crawl.location }}
-  hr
-  .text-center
-    .py-4
-      | Invite friends to vote using code <strong>{{ crawl.token }}</strong>
-    button.btn.btn--active.w-full(type="button" v-clipboard:copy="shareUrl")
+  .pb-4
+    div(v-if="crawlSpotsLoaded")
+      transition-group(name="crawl-spot-list")
+        crawl-spot(v-for="crawlSpot in crawlSpots"
+                   :key="crawlSpot.id"
+                   :crawlSpot="crawlSpot"
+                   v-on:vote="createCrawlSpotVote"
+                   v-on:deleteVote="deleteVote")
+    div(v-else)
+      | Finding {{ crawl.term }} in {{ crawl.location }}
+  .flex.flex-wrap.p-4.shadow.bg-white.rounded.text-center.border
+    div(class="w-full md:w-1/2 pb-6 md:pb-0")
+      | Invite friends to vote using code
+      .pt-2.text-lg.text-blue.tracking-wide {{ crawl.token }}
+    button.btn.btn--active(class="w-full md:w-1/2" type="button" v-clipboard:copy="shareUrl")
       | Copy share link
 </template>
 
