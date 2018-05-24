@@ -17,7 +17,7 @@ export default {
 
   methods: {
     joinCrawl: function() {
-      window.location.href = '/crawls/' + this.token
+      window.location.href = '/crawls/' + this.token.toLowerCase()
     }
   }
 }
