@@ -83,7 +83,7 @@ export default {
   },
 
   mounted: function() {
-    if (process.env.PUSHER_LOG_TO_CONSOLE == 'true') {
+    if (process.env.PUSHER_LOG_TO_CONSOLE === 'true') {
       Pusher.logToConsole = true
     }
 
