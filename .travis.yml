@@ -1,3 +1,4 @@
+sudo: required
 language: ruby
 rvm:
   - 2.5.1
@@ -7,6 +8,10 @@ install:
   - nvm use $NODE_VERSION
   - bundle install
   - yarn install
+  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - sudo cp chromedriver /usr/local/bin/.
+  - sudo chmod +x /usr/local/bin/chromedriver
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
