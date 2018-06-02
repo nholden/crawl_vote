@@ -10,15 +10,7 @@
       %template(slot="firstTabTitle")
         Create a crawl
       %template(slot="firstTabContent")
-        = form_with model: crawl do |f|
-          .pb-4
-            = f.label :term, 'Find', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
-            = f.text_field :term, class: 'shadow appearance-none border rounded w-full py-2 px-3', placeholder: 'e.g. tacos'
-          .pb-4
-            = f.label :location, 'Near', class: 'block pb-1 font-medium text-sm text-blue-light uppercase tracking-wide'
-            = f.text_field :location, class: 'shadow appearance-none border rounded w-full py-2 px-3', placeholder: 'e.g. Barrio Logan, San Diego'
-          .pt-2
-            = f.submit 'Create Crawl', class: 'btn btn--active w-full'
+        %create-crawl-form
       %template(slot="secondTabTitle")
         Join a crawl
       %template(slot="secondTabContent")

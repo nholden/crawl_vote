@@ -1,7 +1,5 @@
 class VotesController < ApplicationController
 
-  skip_forgery_protection
-
   include Authenticatable
   before_action :authenticate
 

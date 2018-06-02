@@ -5,6 +5,9 @@ class Crawl < ApplicationRecord
 
   before_create :generate_token
 
+  validates :term, presence: true
+  validates :location, presence: true
+
   def to_param
     # https://hackernoon.com/using-custom-slugs-for-rails-urls-500eb3f58f3c
     token

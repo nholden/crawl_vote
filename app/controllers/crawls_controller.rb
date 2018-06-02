@@ -20,9 +20,9 @@ class CrawlsController < ApplicationController
     if crawl.valid?
       crawl.save!
       CrawlSpotWorker.perform_async(crawl.id)
-      redirect_to crawl_path(crawl)
+      render json: crawl
     else
-      render :new
+      render json: crawl.errors, status: :bad_request
     end
   end
 

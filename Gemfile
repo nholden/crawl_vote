@@ -23,6 +23,7 @@ group :development, :test do
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'dotenv-rails'
+  gem 'selenium-webdriver'
 end
 
 group :development do

@@ -4,6 +4,7 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import Vue from 'vue/dist/vue.esm'
 import CrawlContainer from '../CrawlContainer'
 import TwoTabs from '../TwoTabs'
+import CreateCrawlForm from '../CreateCrawlForm'
 import JoinCrawlForm from '../JoinCrawlForm'
 import VueClipboard from 'vue-clipboard2'
 import '../stylesheets/application.scss'
@@ -20,6 +21,7 @@ document.addEventListener('turbolinks:load', () => {
     components: {
       CrawlContainer,
       TwoTabs,
+      CreateCrawlForm,
       JoinCrawlForm
     }
   })
