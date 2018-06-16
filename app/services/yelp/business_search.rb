@@ -3,6 +3,7 @@ module Yelp
 
     DEFAULT_LIMIT = 5
     DEFAULT_OPEN_NOW = true
+    LOCATION_NOT_FOUND_ERROR_CODE = 'LOCATION_NOT_FOUND'.freeze
 
     def initialize(parameters)
       super
@@ -11,7 +12,12 @@ module Yelp
     end
 
     def businesses
-      parsed_response_body['businesses'].map { |data| Yelp::Business.new(data) }
+      if error_code == LOCATION_NOT_FOUND_ERROR_CODE
+        Rails.logger.info "Yelp API returned location not found error for parameters: #{@parameters}"
+        []
+      else
+        parsed_response_body['businesses'].map { |data| Yelp::Business.new(data) }
+      end
     end
 
     private

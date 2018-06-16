@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.yelp.com/v3/businesses/search?limit=5&location=Ocean%20Beach&open_now=true&term=Mexican
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer <YELP_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Ratelimit-Dailylimit:
+      - '5000'
+      Ratelimit-Remaining:
+      - '4995'
+      Ratelimit-Resettime:
+      - '2018-06-17T00:00:00+00:00'
+      X-Proxied:
+      - 10-65-132-129-useast1bprod
+      Content-Length:
+      - '5009'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 16 Jun 2018 15:44:53 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-ewr18149-EWR
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"businesses": [{"id": "M7s5jUW8Eo7JV3LQQtjpHA", "alias": "hugos-cocina-san-diego",
+        "name": "Hugo''s Cocina", "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/lwX-U7gEsiMuoknPvPE4tw/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/hugos-cocina-san-diego?adjust_creative=oMASjcc-Fq4yCMBVinVqeQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=oMASjcc-Fq4yCMBVinVqeQ",
+        "review_count": 190, "categories": [{"alias": "mexican", "title": "Mexican"}],
+        "rating": 4.5, "coordinates": {"latitude": 32.74382, "longitude": -117.2488},
+        "transactions": ["pickup", "delivery"], "price": "$$", "location": {"address1":
+        "1830 Sunset Cliffs Blvd", "address2": "", "address3": null, "city": "San
+        Diego", "zip_code": "92107", "country": "US", "state": "CA", "display_address":
+        ["1830 Sunset Cliffs Blvd", "San Diego, CA 92107"]}, "phone": "+16198927882",
+        "display_phone": "(619) 892-7882", "distance": 745.5116479424057}, {"id":
+        "ydpk0BhDyHwNNpniF4J3BQ", "alias": "sunnies-ocean-beach-local-mexican-cuisine-and-coffee-san-diego",
+        "name": "Sunnie''s Ocean Beach Local Mexican Cuisine & Coffee", "image_url":
+        "https://s3-media1.fl.yelpcdn.com/bphoto/LxpAqm5kLRWqAr2HbuXK9Q/o.jpg", "is_closed":
+        false, "url": "https://www.yelp.com/biz/sunnies-ocean-beach-local-mexican-cuisine-and-coffee-san-diego?adjust_creative=oMASjcc-Fq4yCMBVinVqeQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=oMASjcc-Fq4yCMBVinVqeQ",
+        "review_count": 118, "categories": [{"alias": "coffee", "title": "Coffee &
+        Tea"}, {"alias": "mexican", "title": "Mexican"}], "rating": 4.5, "coordinates":
+        {"latitude": 32.7354242, "longitude": -117.2536874}, "transactions": ["pickup",
+        "delivery"], "price": "$$", "location": {"address1": "4723 Point Loma Ave",
+        "address2": "", "address3": "", "city": "San Diego", "zip_code": "92107",
+        "country": "US", "state": "CA", "display_address": ["4723 Point Loma Ave",
+        "San Diego, CA 92107"]}, "phone": "+16196935298", "display_phone": "(619)
+        693-5298", "distance": 903.1599802932917}, {"id": "qZMbGjIE8SZ2VChsYVHR7w",
+        "alias": "margaritas-restaurant-san-diego", "name": "Margarita''s Restaurant",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/gOy_--Eheys51pdPYdtB-Q/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/margaritas-restaurant-san-diego?adjust_creative=oMASjcc-Fq4yCMBVinVqeQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=oMASjcc-Fq4yCMBVinVqeQ",
+        "review_count": 133, "categories": [{"alias": "mexican", "title": "Mexican"},
+        {"alias": "breakfast_brunch", "title": "Breakfast & Brunch"}, {"alias": "newamerican",
+        "title": "American (New)"}], "rating": 4.0, "coordinates": {"latitude": 32.7462498879455,
+        "longitude": -117.250366173685}, "transactions": [], "price": "$", "location":
+        {"address1": "4955 Newport Ave", "address2": "", "address3": "", "city": "San
+        Diego", "zip_code": "92107", "country": "US", "state": "CA", "display_address":
+        ["4955 Newport Ave", "San Diego, CA 92107"]}, "phone": "+16192247454", "display_phone":
+        "(619) 224-7454", "distance": 1062.030201074433}, {"id": "q5NeyjNZCmjmS0ViqpSM1Q",
+        "alias": "ortegas-cocina-san-diego", "name": "Ortega''s Cocina", "image_url":
+        "https://s3-media2.fl.yelpcdn.com/bphoto/4PwNbKMTQCMgrXFExf9ZEQ/o.jpg", "is_closed":
+        false, "url": "https://www.yelp.com/biz/ortegas-cocina-san-diego?adjust_creative=oMASjcc-Fq4yCMBVinVqeQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=oMASjcc-Fq4yCMBVinVqeQ",
+        "review_count": 354, "categories": [{"alias": "mexican", "title": "Mexican"}],
+        "rating": 3.5, "coordinates": {"latitude": 32.74582, "longitude": -117.24901},
+        "transactions": [], "price": "$$", "location": {"address1": "4888 Newport
+        Ave", "address2": "", "address3": "", "city": "San Diego", "zip_code": "92107",
+        "country": "US", "state": "CA", "display_address": ["4888 Newport Ave", "San
+        Diego, CA 92107"]}, "phone": "+16192224205", "display_phone": "(619) 222-4205",
+        "distance": 960.166188523371}, {"id": "wL7Z4NJakeQ4yz9GSWki0A", "alias": "ortizs-taco-shop-san-diego",
+        "name": "Ortiz''s Taco Shop", "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/tPXrFuQqWuqy3agdBYlWeg/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/ortizs-taco-shop-san-diego?adjust_creative=oMASjcc-Fq4yCMBVinVqeQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=oMASjcc-Fq4yCMBVinVqeQ",
+        "review_count": 439, "categories": [{"alias": "mexican", "title": "Mexican"},
+        {"alias": "hotdogs", "title": "Fast Food"}], "rating": 4.5, "coordinates":
+        {"latitude": 32.74049, "longitude": -117.22903}, "transactions": [], "price":
+        "$", "location": {"address1": "3704 Voltaire St", "address2": "", "address3":
+        "", "city": "San Diego", "zip_code": "92107", "country": "US", "state": "CA",
+        "display_address": ["3704 Voltaire St", "San Diego, CA 92107"]}, "phone":
+        "+16192224476", "display_phone": "(619) 222-4476", "distance": 1482.1524308887547}],
+        "total": 76, "region": {"center": {"longitude": -117.24454879760742, "latitude":
+        32.73804739220617}}}'
+    http_version: 
+  recorded_at: Sat, 16 Jun 2018 15:44:53 GMT
+recorded_with: VCR 4.0.0

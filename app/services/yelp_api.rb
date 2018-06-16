@@ -22,6 +22,10 @@ class YelpApi
     end
   end
 
+  def error_code
+    JSON.parse(response.body).dig('error', 'code') if response.body.present?
+  end
+
   def api_path
     raise 'api_path must be defined by subclass'
   end
