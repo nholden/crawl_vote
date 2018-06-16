@@ -25,6 +25,7 @@ class CrawlSpotWorker
       crawl.spots << spot
     end
 
+    crawl.spots_fetched = true
     crawl.save!
 
     Pusher.trigger("crawl-#{crawl.token}", 'crawl-updated', {

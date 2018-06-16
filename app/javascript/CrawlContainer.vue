@@ -1,13 +1,15 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
   .pb-4
-    div(v-if="crawlSpotsLoaded")
-      transition-group(name="crawl-spot-list")
+    div(v-if="spotsFetched")
+      transition-group(v-if="crawlSpots.length > 0" name="crawl-spot-list")
         crawl-spot(v-for="crawlSpot in crawlSpots"
                    :key="crawlSpot.id"
                    :crawlSpot="crawlSpot"
                    v-on:vote="createCrawlSpotVote"
                    v-on:deleteVote="deleteVote")
+      div(v-else)
+        | Couldn’t find {{ crawl.term }} in {{ crawl.location }}
     div(v-else)
       | Finding {{ crawl.term }} in {{ crawl.location }}
   .flex.flex-wrap.p-4.shadow.bg-white.rounded.text-center.border
@@ -42,7 +44,7 @@ export default {
   computed: {
     pusherChannelName: function() { return 'crawl-' + this.crawl.token },
     crawlSpots: function() { return this.crawl.crawl_spots },
-    crawlSpotsLoaded: function() { return this.crawlSpots.length > 0 },
+    spotsFetched: function() { return this.crawl.spots_fetched },
     shareUrl: function() { return process.env.BASE_URL + '/crawls/' + this.crawl.token }
   },
 

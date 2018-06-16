@@ -7,8 +7,10 @@ RSpec.describe CrawlSpotWorker do
 
   describe "#perform", :vcr do
     When { worker.perform(crawl.id) }
+    When { crawl.reload }
 
     Then { crawl.spots.count == 5 }
+    And { crawl.spots_fetched == true }
 
     Given(:spot) { crawl.spots.first }
     And { spot.yelp_id.present? }
