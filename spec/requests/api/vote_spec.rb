@@ -6,7 +6,7 @@ RSpec.describe "votes" do
   let(:crawl_spot) { FactoryBot.create(:crawl_spot) }
 
   scenario "successfully creating a vote" do
-    post votes_path,
+    post api_votes_path,
          params: { vote: { crawl_spot_id: crawl_spot.id } },
          headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
@@ -16,7 +16,7 @@ RSpec.describe "votes" do
   end
 
   scenario "attempting to create a vote without a user_uuid" do
-    post votes_path,
+    post api_votes_path,
          params: { vote: { crawl_spot_id: crawl_spot.id } }
 
     expect(crawl_spot.votes.count).to eql 0
@@ -25,7 +25,7 @@ RSpec.describe "votes" do
   end
 
   scenario "attempting to create a vote without a crawl_spot_id" do
-    post votes_path,
+    post api_votes_path,
          params: { vote: { crawl_spot_id: nil } },
          headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
@@ -36,7 +36,7 @@ RSpec.describe "votes" do
 
   scenario "attempting to create a duplicate vote" do
     FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid)
-    post votes_path,
+    post api_votes_path,
          params: { vote: { crawl_spot_id: crawl_spot.id } },
          headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
@@ -48,7 +48,7 @@ RSpec.describe "votes" do
 
   scenario "successfully deleting a vote" do
     vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid)
-    delete vote_path(vote),
+    delete api_vote_path(vote),
            headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
     expect(Vote.find_by_id(vote.id)).to be_nil
@@ -58,7 +58,7 @@ RSpec.describe "votes" do
 
   scenario "attempting to delete a vote that doesn't belong to current user" do
     vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: 'other-user-uuid')
-    delete vote_path(vote),
+    delete api_vote_path(vote),
            headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
     expect(Vote.find_by_id(vote.id)).to be_present
@@ -68,7 +68,7 @@ RSpec.describe "votes" do
   end
 
   scenario "attempting to delete a vote that doesn't exist" do
-    expect { delete vote_path(id: 1234), headers: { 'Authorization': "Bearer \"#{user_uuid}\"" } }.
+    expect { delete api_vote_path(id: 1234), headers: { 'Authorization': "Bearer \"#{user_uuid}\"" } }.
       to raise_error ActiveRecord::RecordNotFound
   end
 

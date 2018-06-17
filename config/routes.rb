@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
 
   root 'crawls#new'
-  resources :crawls, only: [:new, :create, :show], param: :token
-  resources :votes, only: [:create, :destroy]
+  resources :crawls, only: [:new, :show], param: :token
+
+  namespace :api do
+    resources :crawls, only: [:show, :create], param: :token
+    resources :votes, only: [:create, :destroy]
+  end
 
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     # Protect against timing attacks:

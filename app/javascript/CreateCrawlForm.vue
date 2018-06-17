@@ -60,7 +60,7 @@ export default {
   methods: {
     createCrawl() {
       if (this.valid) {
-        fetch('/crawls', {
+        fetch('/api/crawls', {
           body: JSON.stringify({ crawl: _.mapValues(this.fields, function(field) { return field.value }) }),
           headers: { 'content-type': 'application/json' },
           method: 'POST'

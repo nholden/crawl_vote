@@ -8,7 +8,7 @@ RSpec.describe "crawls" do
   let!(:vote) { FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid) }
 
   scenario "successfully fetching crawl data" do
-    get crawl_path(crawl, format: :json),
+    get api_crawl_path(crawl),
         headers: { 'Authorization': "Bearer \"#{user_uuid}\"" }
 
     parsed_response = JSON.parse(response.body)
@@ -20,7 +20,7 @@ RSpec.describe "crawls" do
   end
 
   scenario "attempting to fetch crawl data without a user_uuid" do
-    get crawl_path(crawl, format: :json)
+    get api_crawl_path(crawl)
 
     expect(response.status).to eql 401
     expect(response.body).to include 'HTTP Token: Access denied.'

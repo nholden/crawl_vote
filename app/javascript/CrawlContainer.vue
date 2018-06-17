@@ -50,7 +50,7 @@ export default {
 
   methods: {
     createCrawlSpotVote: function(id) {
-      fetch('/votes', {
+      fetch('/api/votes', {
         body: JSON.stringify({ vote: { crawl_spot_id: id } }),
         headers: {
           'content-type': 'application/json',
@@ -61,7 +61,7 @@ export default {
     },
 
     deleteVote: function(id) {
-      fetch('/votes/' + id, {
+      fetch('/api/votes/' + id, {
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
@@ -71,7 +71,7 @@ export default {
     },
 
     refreshCrawl: function() {
-      fetch('/crawls/' + this.crawl.token + '.json', {
+      fetch('/api/crawls/' + this.crawl.token, {
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
