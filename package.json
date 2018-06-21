@@ -17,7 +17,6 @@
     "vue-turbolinks": "^2.0.3"
   },
   "devDependencies": {
-    "dotenv": "^5.0.1",
     "webpack-dev-server": "2.11.2"
   }
 }
