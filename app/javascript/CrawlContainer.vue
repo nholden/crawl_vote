@@ -45,7 +45,7 @@ export default {
     pusherChannelName: function() { return 'crawl-' + this.crawl.token },
     crawlSpots: function() { return this.crawl.crawl_spots },
     spotsFetched: function() { return this.crawl.spots_fetched },
-    shareUrl: function() { return process.env.BASE_URL + '/crawls/' + this.crawl.token }
+    shareUrl: function() { return window.env.BASE_URL + '/crawls/' + this.crawl.token }
   },
 
   methods: {
@@ -85,12 +85,12 @@ export default {
   },
 
   mounted: function() {
-    if (process.env.PUSHER_LOG_TO_CONSOLE === 'true') {
+    if (window.env.PUSHER_LOG_TO_CONSOLE === 'true') {
       Pusher.logToConsole = true
     }
 
-    var pusher = new Pusher(process.env.PUSHER_KEY, {
-      cluster: process.env.PUSHER_CLUSTER,
+    var pusher = new Pusher(window.env.PUSHER_KEY, {
+      cluster: window.env.PUSHER_CLUSTER,
       encrypted: true
     })
 

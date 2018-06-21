@@ -5,6 +5,8 @@
     = csrf_meta_tags
     = csp_meta_tag
 
+    :javascript
+      window.env = #{WindowEnv.to_json};
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
