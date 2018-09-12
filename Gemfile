@@ -16,6 +16,7 @@ gem 'sidekiq'
 gem 'pusher'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'rollbar'
+gem 'graphql'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
@@ -39,3 +40,5 @@ group :test do
   gem 'vcr'
   gem 'pusher-fake'
 end
+
+gem 'graphiql-rails', group: :development
