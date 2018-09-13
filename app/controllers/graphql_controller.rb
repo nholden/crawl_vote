@@ -1,6 +1,7 @@
 class GraphqlController < ApplicationController
 
   skip_forgery_protection
+  before_action :authenticate
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -43,5 +44,11 @@ class GraphqlController < ApplicationController
 
     render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
   end
-  
+
+  def authenticate
+    authenticate_or_request_with_http_token do |token, options|
+      Current.user_uuid = token
+    end
+  end
+
 end
