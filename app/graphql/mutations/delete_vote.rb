@@ -1,6 +1,8 @@
 module Mutations
   class DeleteVote < Mutations::BaseMutation
 
+    description "Delete a vote for the current user by vote ID"
+
     null true
 
     argument :id, ID, required: true

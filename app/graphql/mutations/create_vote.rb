@@ -1,6 +1,8 @@
 module Mutations
   class CreateVote < Mutations::BaseMutation
 
+    description "Create a vote for the current user on a crawl spot"
+
     null true
 
     argument :crawl_spot_id, ID, required: true
