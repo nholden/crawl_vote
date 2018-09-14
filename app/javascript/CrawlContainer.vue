@@ -76,11 +76,12 @@ export default {
         },
         body: JSON.stringify({
           query: `
-            {
-              crawl(token: rusticpinot65) {
+            query Crawl($token: String!) {
+              crawl(token: $token) {
                 term
                 location
                 spotsFetched
+                token
                 crawlSpots {
                   id
                   votesCount
@@ -99,7 +100,10 @@ export default {
                 }
               }
             }
-          `
+          `,
+          variables: {
+            token: this.crawl.token
+          },
         }),
         method: 'POST'
       }).then((response) => {
