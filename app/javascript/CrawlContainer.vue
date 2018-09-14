@@ -48,8 +48,18 @@ export default {
 
   methods: {
     createCrawlSpotVote: function(id) {
-      fetch('/api/votes', {
-        body: JSON.stringify({ vote: { crawl_spot_id: id } }),
+      fetch('/graphql', {
+        body: JSON.stringify({
+          query: `
+            mutation CreateVote($id: ID!) {
+              createVote(input: { crawlSpotId: $id }) {
+                id
+                errors
+              }
+            }
+          `,
+          variables: { id: id }
+        }),
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
