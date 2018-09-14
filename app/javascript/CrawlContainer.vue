@@ -47,13 +47,33 @@ export default {
   },
 
   methods: {
-    createCrawlSpotVote: function(id) {
+    createCrawlSpotVote: function(crawlSpotId) {
       fetch('/graphql', {
         body: JSON.stringify({
           query: `
-            mutation CreateVote($id: ID!) {
-              createVote(input: { crawlSpotId: $id }) {
+            mutation CreateVote($crawlSpotId: ID!) {
+              createVote(input: { crawlSpotId: $crawlSpotId }) {
                 id
+                errors
+              }
+            }
+          `,
+          variables: { crawlSpotId: crawlSpotId }
+        }),
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + this.userUuid
+        },
+        method: 'POST'
+      })
+    },
+
+    deleteVote: function(id) {
+      fetch('/graphql', {
+        body: JSON.stringify({
+          query: `
+            mutation DeleteVote($id: ID!) {
+              deleteVote(input: { id: $id }) {
                 errors
               }
             }
@@ -65,16 +85,6 @@ export default {
           Authorization: 'Bearer ' + this.userUuid
         },
         method: 'POST'
-      })
-    },
-
-    deleteVote: function(id) {
-      fetch('/api/votes/' + id, {
-        headers: {
-          'content-type': 'application/json',
-          Authorization: 'Bearer ' + this.userUuid
-        },
-        method: 'DELETE'
       })
     },
 
