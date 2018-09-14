@@ -1,5 +1,6 @@
 module Types
   class SpotType < Types::BaseObject
+    field :id, ID, null: false
     field :name, String, null: false
     field :rating, Float, null: false
     field :review_count, Integer, null: false

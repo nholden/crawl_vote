@@ -1,9 +1,9 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
   .pb-4
-    div(v-if="spotsFetched")
-      transition-group(v-if="crawlSpots.length > 0" name="crawl-spot-list")
-        crawl-spot(v-for="crawlSpot in crawlSpots"
+    div(v-if="crawl.spotsFetched")
+      transition-group(v-if="crawl.crawlSpots.length > 0" name="crawl-spot-list")
+        crawl-spot(v-for="crawlSpot in crawl.crawlSpots"
                    :key="crawlSpot.id"
                    :crawlSpot="crawlSpot"
                    v-on:vote="createCrawlSpotVote"
@@ -43,8 +43,6 @@ export default {
 
   computed: {
     pusherChannelName: function() { return 'crawl-' + this.crawl.token },
-    crawlSpots: function() { return this.crawl.crawl_spots },
-    spotsFetched: function() { return this.crawl.spots_fetched },
     shareUrl: function() { return window.env.BASE_URL + '/crawls/' + this.crawl.token }
   },
 
@@ -71,15 +69,43 @@ export default {
     },
 
     refreshCrawl: function() {
-      fetch('/api/crawls/' + this.crawl.token, {
+      fetch('/graphql', {
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
-        }
+        },
+        body: JSON.stringify({
+          query: `
+            {
+              crawl(token: rusticpinot65) {
+                term
+                location
+                spotsFetched
+                crawlSpots {
+                  id
+                  votesCount
+                  currentUserVoteId
+                  spot {
+                    id
+                    name
+                    rating
+                    reviewCount
+                    url
+                    imageUrl
+                    address1
+                    city
+                    state
+                  }
+                }
+              }
+            }
+          `
+        }),
+        method: 'POST'
       }).then((response) => {
         return response.json()
-      }).then((data) => {
-        this.crawl = data
+      }).then((parsedResponse) => {
+        this.crawl = parsedResponse.data.crawl
       })
     }
   },

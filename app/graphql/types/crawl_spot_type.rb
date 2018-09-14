@@ -1,7 +1,8 @@
 module Types
   class CrawlSpotType < Types::BaseObject
+    field :id, ID, null: false
     field :votes_count, Integer, null: false
-    field :has_current_user_vote, Boolean, null: false, method: :has_current_user_vote?
+    field :current_user_vote_id, Integer, null: true
     field :spot, SpotType, null: false
   end
 end

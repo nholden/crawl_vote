@@ -2,7 +2,7 @@
 .py-4
   .flex.flex-wrap.items-stretch.shadow-md.bg-white.border-t-4.border-blue(class="rounded-b md:rounded-bl-none")
     div(class="w-1/2 md:w-1/3")
-      .h-full(:style="{ 'background-image': 'url(' + spot.image_url + ')' }"
+      .h-full(:style="{ 'background-image': 'url(' + spot.imageUrl + ')' }"
                  style="background-repeat: no-repeat; background-position: 50% 50%; background-size: cover;")
     .p-4.pb-0(class="w-1/2")
       .font-medium.text-blue.uppercase.tracking-wide.pb-1(class="text-sm md:text-base")
@@ -14,7 +14,7 @@
             img.inline-block.align-middle(src="./images/yelp_logo.png" width="106" height="68")
         .text-center
           .pb-1: img.inline-block.align-middle(:src="yelpStarsPath" width="132" height="24")
-          .text-sm.text-grey-darker Based on {{ spot.review_count }} reviews
+          .text-sm.text-grey-darker Based on {{ spot.reviewCount }} reviews
     .flex.flex-wrap.pr-4.text-center(class="w-full md:w-1/6 pt-4 md:pt-0 my-0 md:my-6")
       .pb-3(class="w-1/3 md:w-full")
         .text-xl.font-medium
@@ -50,15 +50,15 @@ export default {
 
   data: function() {
     return {
-      currentUserVoted: !!(this.crawlSpot.current_user_vote),
-      votesCount: this.crawlSpot.votes_count
+      currentUserVoted: !!(this.crawlSpot.currentUserVoteId),
+      votesCount: this.crawlSpot.votesCount
     }
   },
 
   watch: {
     crawlSpot: function() {
-      this.currentUserVoted = !!(this.crawlSpot.current_user_vote)
-      this.votesCount = this.crawlSpot.votes_count
+      this.currentUserVoted = !!(this.crawlSpot.currentUserVoteId)
+      this.votesCount = this.crawlSpot.votesCount
     }
   },
 
@@ -70,7 +70,7 @@ export default {
     },
 
     deleteVote: function() {
-      this.$emit('deleteVote', this.crawlSpot.current_user_vote.id)
+      this.$emit('deleteVote', this.crawlSpot.currentUserVoteId)
       this.currentUserVoted = false
       this.votesCount -= 1
     }
