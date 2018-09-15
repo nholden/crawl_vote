@@ -14,7 +14,6 @@ gem 'decent_exposure', '3.0.0'
 gem 'excon'
 gem 'sidekiq'
 gem 'pusher'
-gem 'active_model_serializers', '~> 0.10.0'
 gem 'rollbar'
 gem 'graphql'
 

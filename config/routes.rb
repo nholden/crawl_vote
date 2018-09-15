@@ -9,11 +9,6 @@ Rails.application.routes.draw do
   root 'crawls#new'
   resources :crawls, only: [:new, :show], param: :token
 
-  namespace :api do
-    resources :crawls, only: [:show, :create], param: :token
-    resources :votes, only: [:create, :destroy]
-  end
-
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     # Protect against timing attacks:
     # - See https://codahale.com/a-lesson-in-timing-attacks/

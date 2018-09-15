@@ -27,7 +27,13 @@ import CrawlSpot from 'CrawlSpot'
 
 export default {
   props: {
-    crawlInitial: {
+    token: {
+      required: true
+    },
+    term: {
+      required: true
+    },
+    location: {
       required: true
     },
     userUuid: {
@@ -37,7 +43,11 @@ export default {
 
   data: function() {
     return {
-      crawl: _.cloneDeep(this.crawlInitial)
+      crawl: {
+        token: this.token,
+        term: this.term,
+        location: this.location,
+      },
     }
   },
 
