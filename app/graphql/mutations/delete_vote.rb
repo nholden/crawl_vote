@@ -1,26 +1,22 @@
 module Mutations
   class DeleteVote < Mutations::BaseMutation
 
-    description "Delete a vote for the current user by vote ID"
+    description "Delete a vote for the current user on a crawl spot"
 
     null true
 
-    argument :id, ID, required: true
+    argument :crawl_spot_id, ID, required: true
 
     field :errors, [String], null: false
 
-    def resolve(id:)
-      @vote = Vote.find_by_id(id)
+    def resolve(crawl_spot_id:)
+      @vote = Vote.find_by(crawl_spot_id: crawl_spot_id, user_uuid: Current.user_uuid)
 
-      if @vote&.user_uuid == Current.user_uuid
+      if @vote
         @vote.destroy
         trigger_crawl_update
         {
           errors: [],
-        }
-      elsif @vote
-        {
-          errors: ["Vote does not belong to current user"],
         }
       else
         {

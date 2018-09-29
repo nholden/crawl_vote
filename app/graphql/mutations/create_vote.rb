@@ -7,7 +7,6 @@ module Mutations
 
     argument :crawl_spot_id, ID, required: true
 
-    field :id, ID, null: true
     field :errors, [String], null: false
 
     def resolve(crawl_spot_id:)
@@ -20,12 +19,10 @@ module Mutations
         @vote.save!
         trigger_crawl_update
         {
-          id: @vote.id,
           errors: [],
         }
       else
         {
-          id: nil,
           errors: @vote.errors.full_messages,
         }
       end

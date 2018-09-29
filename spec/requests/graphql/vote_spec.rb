@@ -9,7 +9,6 @@ RSpec.describe "votes" do
     query = <<-'GRAPHQL'
       mutation CreateVote($crawlSpotId: ID!) {
         createVote(input: { crawlSpotId: $crawlSpotId }) {
-          id
           errors
         }
       }
@@ -35,7 +34,6 @@ RSpec.describe "votes" do
     query = <<-'GRAPHQL'
       mutation CreateVote($crawlSpotId: ID!) {
         createVote(input: { crawlSpotId: $crawlSpotId }) {
-          id
           errors
         }
       }
@@ -58,7 +56,6 @@ RSpec.describe "votes" do
     query = <<-'GRAPHQL'
       mutation {
         createVote(input: { crawlSpotId: null }) {
-          id
           errors
         }
       }
@@ -83,7 +80,6 @@ RSpec.describe "votes" do
     query = <<-'GRAPHQL'
       mutation CreateVote($crawlSpotId: ID!) {
         createVote(input: { crawlSpotId: $crawlSpotId }) {
-          id
           errors
         }
       }
@@ -110,8 +106,8 @@ RSpec.describe "votes" do
     vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid)
 
     query = <<-'GRAPHQL'
-      mutation DeleteVote($id: ID!) {
-        deleteVote(input: { id: $id }) {
+      mutation DeleteVote($crawlSpotId: ID!) {
+        deleteVote(input: { crawlSpotId: $crawlSpotId }) {
           errors
         }
       }
@@ -121,7 +117,7 @@ RSpec.describe "votes" do
       params: {
         query: query,
         variables: {
-          id: vote.id
+          crawlSpotId: crawl_spot.id
         },
       },
       headers: {
@@ -133,12 +129,12 @@ RSpec.describe "votes" do
     expect(response.status).to eql 200
   end
 
-  scenario "attempting to delete a vote that doesn't belong to current user" do
+  scenario "attempting to delete a vote when all votes for crawl spot belong to other users" do
     vote = FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: 'other-user-uuid')
 
     query = <<-'GRAPHQL'
-      mutation DeleteVote($id: ID!) {
-        deleteVote(input: { id: $id }) {
+      mutation DeleteVote($crawlSpotId: ID!) {
+        deleteVote(input: { crawlSpotId: $crawlSpotId }) {
           errors
         }
       }
@@ -148,7 +144,7 @@ RSpec.describe "votes" do
       params: {
         query: query,
         variables: {
-          id: vote.id
+          crawlSpotId: crawl_spot.id
         },
       },
       headers: {
@@ -158,13 +154,13 @@ RSpec.describe "votes" do
     expect(Vote.find_by_id(vote.id)).to be_present
     expect(crawl_spot.votes.count).to eql 1
     expect(response.status).to eql 200
-    expect(response.body).to include 'Vote does not belong to current user'
+    expect(response.body).to include 'Vote not found'
   end
 
   scenario "attempting to delete a vote that doesn't exist" do
     query = <<-'GRAPHQL'
-      mutation DeleteVote($id: ID!) {
-        deleteVote(input: { id: $id }) {
+      mutation DeleteVote($crawlSpotId: ID!) {
+        deleteVote(input: { crawlSpotId: $crawlSpotId }) {
           errors
         }
       }
@@ -174,7 +170,7 @@ RSpec.describe "votes" do
       params: {
         query: query,
         variables: {
-          id: 1234
+          crawlSpotId: 1234
         },
       },
       headers: {

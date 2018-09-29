@@ -50,15 +50,15 @@ export default {
 
   data: function() {
     return {
-      currentUserVoted: !!(this.crawlSpot.currentUserVoteId),
-      votesCount: this.crawlSpot.votesCount
+      currentUserVoted: this.crawlSpot.votes.areAnyByCurrentUser,
+      votesCount: this.crawlSpot.votes.totalCount
     }
   },
 
   watch: {
     crawlSpot: function() {
-      this.currentUserVoted = !!(this.crawlSpot.currentUserVoteId)
-      this.votesCount = this.crawlSpot.votesCount
+      this.currentUserVoted = this.crawlSpot.votes.areAnyByCurrentUser
+      this.votesCount = this.crawlSpot.votes.totalCount
     }
   },
 
@@ -70,7 +70,7 @@ export default {
     },
 
     deleteVote: function() {
-      this.$emit('deleteVote', this.crawlSpot.currentUserVoteId)
+      this.$emit('deleteVote', this.crawlSpot.id)
       this.currentUserVoted = false
       this.votesCount -= 1
     }

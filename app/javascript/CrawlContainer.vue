@@ -66,7 +66,6 @@ export default {
           query: `
             mutation CreateVote($crawlSpotId: ID!) {
               createVote(input: { crawlSpotId: $crawlSpotId }) {
-                id
                 errors
               }
             }
@@ -81,17 +80,17 @@ export default {
       })
     },
 
-    deleteVote: function(id) {
+    deleteVote: function(crawlSpotId) {
       fetch('/graphql', {
         body: JSON.stringify({
           query: `
-            mutation DeleteVote($id: ID!) {
-              deleteVote(input: { id: $id }) {
+            mutation DeleteVote($crawlSpotId: ID!) {
+              deleteVote(input: { crawlSpotId: $crawlSpotId }) {
                 errors
               }
             }
           `,
-          variables: { id: id }
+          variables: { crawlSpotId: crawlSpotId }
         }),
         headers: {
           'content-type': 'application/json',
@@ -118,8 +117,10 @@ export default {
                   areFetched
                   nodes {
                     id
-                    votesCount
-                    currentUserVoteId
+                    votes {
+                      totalCount
+                      areAnyByCurrentUser
+                    }
                     spot {
                       id
                       name

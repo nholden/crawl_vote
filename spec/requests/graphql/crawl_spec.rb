@@ -18,8 +18,10 @@ RSpec.describe "crawls" do
             areFetched
             nodes {
               id
-              votesCount
-              currentUserVoteId
+              votes {
+                totalCount
+                areAnyByCurrentUser
+              }
               spot {
                 id
                 name
@@ -48,13 +50,19 @@ RSpec.describe "crawls" do
         'Authorization': "Bearer \"#{user_uuid}\"",
       }
 
-    crawl_data = JSON.parse(response.body).dig('data', 'crawl')
     expect(response.status).to eql 200
+
+    crawl_data = JSON.parse(response.body).dig('data', 'crawl')
     expect(crawl_data['term']).to eql 'Acai Bowl'
     expect(crawl_data['location']).to eql 'Golden Hill, San Diego'
-    expect(crawl_data.dig('crawlSpots', 'areFetched')).to eql true
-    expect(crawl_data.dig('crawlSpots', 'nodes').count).to eql 1
-    expect(crawl_data.dig('crawlSpots', 'nodes').first['currentUserVoteId']).to be_present
+
+    crawl_spots_data = crawl_data['crawlSpots']
+    expect(crawl_spots_data['areFetched']).to eql true
+    expect(crawl_spots_data['nodes'].count).to eql 1
+
+    votes_data = crawl_spots_data['nodes'].first['votes']
+    expect(votes_data['totalCount']).to eql 1
+    expect(votes_data['areAnyByCurrentUser']).to eql true
   end
 
   scenario "attempting to fetch crawl data without a user_uuid" do
@@ -63,14 +71,15 @@ RSpec.describe "crawls" do
         crawl(token: $token) {
           term
           location
-          spotsFetched
           token
           crawlSpots {
             areFetched
             nodes {
               id
-              votesCount
-              currentUserVoteId
+              votes {
+                totalCount
+                areAnyByCurrentUser
+              }
               spot {
                 id
                 name
