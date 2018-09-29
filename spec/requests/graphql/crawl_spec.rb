@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "crawls" do
 
   let(:user_uuid) { SecureRandom.uuid }
-  let(:crawl) { FactoryBot.create(:crawl, term: 'Acai Bowl', location: 'Golden Hill, San Diego') }
+  let(:crawl) { FactoryBot.create(:crawl, term: 'Acai Bowl', location: 'Golden Hill, San Diego', spots_fetched: true) }
   let!(:crawl_spot) { FactoryBot.create(:crawl_spot, crawl: crawl) }
   let!(:vote) { FactoryBot.create(:vote, crawl_spot: crawl_spot, user_uuid: user_uuid) }
 
@@ -13,9 +13,9 @@ RSpec.describe "crawls" do
         crawl(token: $token) {
           term
           location
-          spotsFetched
           token
           crawlSpots {
+            areFetched
             nodes {
               id
               votesCount
@@ -52,7 +52,8 @@ RSpec.describe "crawls" do
     expect(response.status).to eql 200
     expect(crawl_data['term']).to eql 'Acai Bowl'
     expect(crawl_data['location']).to eql 'Golden Hill, San Diego'
-    expect(crawl_data['crawlSpots'].count).to eql 1
+    expect(crawl_data.dig('crawlSpots', 'areFetched')).to eql true
+    expect(crawl_data.dig('crawlSpots', 'nodes').count).to eql 1
     expect(crawl_data.dig('crawlSpots', 'nodes').first['currentUserVoteId']).to be_present
   end
 
@@ -65,6 +66,7 @@ RSpec.describe "crawls" do
           spotsFetched
           token
           crawlSpots {
+            areFetched
             nodes {
               id
               votesCount

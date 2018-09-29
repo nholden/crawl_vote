@@ -1,7 +1,7 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
   .pb-4
-    div(v-if="crawl.spotsFetched")
+    div(v-if="crawl.crawlSpots.areFetched")
       transition-group(v-if="crawl.crawlSpots.nodes.length > 0" name="crawl-spot-list")
         crawl-spot(v-for="crawlSpot in crawl.crawlSpots.nodes"
                    :key="crawlSpot.id"
@@ -47,6 +47,9 @@ export default {
         token: this.token,
         term: this.term,
         location: this.location,
+        crawlSpots: {
+          areFetched: false
+        },
       },
     }
   },
@@ -110,9 +113,9 @@ export default {
               crawl(token: $token) {
                 term
                 location
-                spotsFetched
                 token
                 crawlSpots {
+                  areFetched
                   nodes {
                     id
                     votesCount
