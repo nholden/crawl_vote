@@ -10,7 +10,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(crawl_spot_id:)
-      @vote = Vote.find_by(crawl_spot_id: crawl_spot_id, user_uuid: Current.user_uuid)
+      @vote = Vote.find_by(crawl_spot_id: crawl_spot_id, user_uuid: context[:current_user_uuid])
 
       if @vote
         @vote.destroy

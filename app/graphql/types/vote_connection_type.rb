@@ -12,7 +12,7 @@ module Types
     field :areAnyByCurrentUser, Boolean, "Whether the current user has voted for the crawl spot", null: true
 
     def are_any_by_current_user
-      object.nodes.where(user_uuid: Current.user_uuid).any?
+      object.nodes.where(user_uuid: context[:current_user_uuid]).any?
     end
 
   end

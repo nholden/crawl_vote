@@ -12,7 +12,7 @@ module Mutations
     def resolve(crawl_spot_id:)
       @vote = Vote.new(
         crawl_spot_id: crawl_spot_id,
-        user_uuid: Current.user_uuid
+        user_uuid: context[:current_user_uuid]
       )
 
       if @vote.valid?
