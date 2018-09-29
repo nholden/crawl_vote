@@ -2,8 +2,8 @@
 .max-w-md.mx-auto.p-2.text-black
   .pb-4
     div(v-if="crawl.spotsFetched")
-      transition-group(v-if="crawl.crawlSpots.length > 0" name="crawl-spot-list")
-        crawl-spot(v-for="crawlSpot in crawl.crawlSpots"
+      transition-group(v-if="crawl.crawlSpots.nodes.length > 0" name="crawl-spot-list")
+        crawl-spot(v-for="crawlSpot in crawl.crawlSpots.nodes"
                    :key="crawlSpot.id"
                    :crawlSpot="crawlSpot"
                    v-on:vote="createCrawlSpotVote"
@@ -113,19 +113,21 @@ export default {
                 spotsFetched
                 token
                 crawlSpots {
-                  id
-                  votesCount
-                  currentUserVoteId
-                  spot {
+                  nodes {
                     id
-                    name
-                    rating
-                    reviewCount
-                    url
-                    imageUrl
-                    address1
-                    city
-                    state
+                    votesCount
+                    currentUserVoteId
+                    spot {
+                      id
+                      name
+                      rating
+                      reviewCount
+                      url
+                      imageUrl
+                      address1
+                      city
+                      state
+                    }
                   }
                 }
               }

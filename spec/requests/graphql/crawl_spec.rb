@@ -16,19 +16,21 @@ RSpec.describe "crawls" do
           spotsFetched
           token
           crawlSpots {
-            id
-            votesCount
-            currentUserVoteId
-            spot {
+            nodes {
               id
-              name
-              rating
-              reviewCount
-              url
-              imageUrl
-              address1
-              city
-              state
+              votesCount
+              currentUserVoteId
+              spot {
+                id
+                name
+                rating
+                reviewCount
+                url
+                imageUrl
+                address1
+                city
+                state
+              }
             }
           }
         }
@@ -51,7 +53,7 @@ RSpec.describe "crawls" do
     expect(crawl_data['term']).to eql 'Acai Bowl'
     expect(crawl_data['location']).to eql 'Golden Hill, San Diego'
     expect(crawl_data['crawlSpots'].count).to eql 1
-    expect(crawl_data['crawlSpots'].first['currentUserVoteId']).to be_present
+    expect(crawl_data.dig('crawlSpots', 'nodes').first['currentUserVoteId']).to be_present
   end
 
   scenario "attempting to fetch crawl data without a user_uuid" do
@@ -63,19 +65,21 @@ RSpec.describe "crawls" do
           spotsFetched
           token
           crawlSpots {
-            id
-            votesCount
-            currentUserVoteId
-            spot {
+            nodes {
               id
-              name
-              rating
-              reviewCount
-              url
-              imageUrl
-              address1
-              city
-              state
+              votesCount
+              currentUserVoteId
+              spot {
+                id
+                name
+                rating
+                reviewCount
+                url
+                imageUrl
+                address1
+                city
+                state
+              }
             }
           }
         }
