@@ -122,7 +122,6 @@ export default {
                       areAnyByCurrentUser
                     }
                     spot {
-                      id
                       name
                       rating
                       reviewCount

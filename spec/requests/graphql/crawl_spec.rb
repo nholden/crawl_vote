@@ -23,7 +23,6 @@ RSpec.describe "crawls" do
                 areAnyByCurrentUser
               }
               spot {
-                id
                 name
                 rating
                 reviewCount
@@ -81,7 +80,6 @@ RSpec.describe "crawls" do
                 areAnyByCurrentUser
               }
               spot {
-                id
                 name
                 rating
                 reviewCount

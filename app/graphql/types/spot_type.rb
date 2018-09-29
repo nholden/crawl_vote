@@ -3,7 +3,6 @@ module Types
 
     description "A physical location"
 
-    field :id, ID, null: false
     field :name, String, "The name of the spot", null: false
     field :rating, Float, "The Yelp rating of the spot", null: false
     field :review_count, Integer, "How many Yelp reviews the spot has received", null: false
