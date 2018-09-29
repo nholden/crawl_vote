@@ -10,7 +10,7 @@
       %template(slot="firstTabTitle")
         Create a crawl
       %template(slot="firstTabContent")
-        %create-crawl-form
+        %create-crawl-form(:user-uuid="'#{Current.user_uuid}'")
       %template(slot="secondTabTitle")
         Join a crawl
       %template(slot="secondTabContent")

@@ -37,6 +37,11 @@ import _ from 'lodash'
 import TextInput from 'TextInput'
 
 export default {
+  props: {
+    userUuid: {
+      required: true
+    },
+  },
   data: function() {
     return {
       fields: {
@@ -60,14 +65,30 @@ export default {
   methods: {
     createCrawl() {
       if (this.valid) {
-        fetch('/api/crawls', {
-          body: JSON.stringify({ crawl: _.mapValues(this.fields, function(field) { return field.value }) }),
-          headers: { 'content-type': 'application/json' },
+        fetch('/graphql', {
+          headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + this.userUuid,
+          },
+          body: JSON.stringify({
+            query: `
+              mutation CreateCrawl($term: String!, $location: String!) {
+                createCrawl(input: { term: $term, location: $location }) {
+                  token
+                  errors
+                }
+              }
+            `,
+            variables: {
+              term: this.fields.term.value,
+              location: this.fields.location.value,
+            },
+          }),
           method: 'POST'
         }).then((response) => {
           return response.json()
-        }).then((data) => {
-          window.location.href = '/crawls/' + data.token
+        }).then((parsedResponse) => {
+          window.location.href = '/crawls/' + parsedResponse.data.createCrawl.token
         })
       } else {
         this.validateFields = true

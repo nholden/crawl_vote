@@ -1,1 +1,1 @@
-%crawl-container(:crawl-initial="#{CrawlSerializer.new(crawl).to_json}" :user-uuid="'#{Current.user_uuid}'")
+%crawl-container(:token="'#{crawl.token}'" :term="'#{crawl.term}'" :location="'#{crawl.location}'" :user-uuid="'#{Current.user_uuid}'")

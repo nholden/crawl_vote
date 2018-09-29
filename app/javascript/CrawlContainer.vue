@@ -1,9 +1,9 @@
 <template lang="pug">
 .max-w-md.mx-auto.p-2.text-black
   .pb-4
-    div(v-if="spotsFetched")
-      transition-group(v-if="crawlSpots.length > 0" name="crawl-spot-list")
-        crawl-spot(v-for="crawlSpot in crawlSpots"
+    div(v-if="crawl.crawlSpots.areFetched")
+      transition-group(v-if="crawl.crawlSpots.nodes.length > 0" name="crawl-spot-list")
+        crawl-spot(v-for="crawlSpot in crawl.crawlSpots.nodes"
                    :key="crawlSpot.id"
                    :crawlSpot="crawlSpot"
                    v-on:vote="createCrawlSpotVote"
@@ -27,7 +27,13 @@ import CrawlSpot from 'CrawlSpot'
 
 export default {
   props: {
-    crawlInitial: {
+    token: {
+      required: true
+    },
+    term: {
+      required: true
+    },
+    location: {
       required: true
     },
     userUuid: {
@@ -37,21 +43,35 @@ export default {
 
   data: function() {
     return {
-      crawl: _.cloneDeep(this.crawlInitial)
+      crawl: {
+        token: this.token,
+        term: this.term,
+        location: this.location,
+        crawlSpots: {
+          areFetched: false
+        },
+      },
     }
   },
 
   computed: {
     pusherChannelName: function() { return 'crawl-' + this.crawl.token },
-    crawlSpots: function() { return this.crawl.crawl_spots },
-    spotsFetched: function() { return this.crawl.spots_fetched },
     shareUrl: function() { return window.env.BASE_URL + '/crawls/' + this.crawl.token }
   },
 
   methods: {
-    createCrawlSpotVote: function(id) {
-      fetch('/api/votes', {
-        body: JSON.stringify({ vote: { crawl_spot_id: id } }),
+    createCrawlSpotVote: function(crawlSpotId) {
+      fetch('/graphql', {
+        body: JSON.stringify({
+          query: `
+            mutation CreateVote($crawlSpotId: ID!) {
+              createVote(input: { crawlSpotId: $crawlSpotId }) {
+                errors
+              }
+            }
+          `,
+          variables: { crawlSpotId: crawlSpotId }
+        }),
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
@@ -60,26 +80,71 @@ export default {
       })
     },
 
-    deleteVote: function(id) {
-      fetch('/api/votes/' + id, {
+    deleteVote: function(crawlSpotId) {
+      fetch('/graphql', {
+        body: JSON.stringify({
+          query: `
+            mutation DeleteVote($crawlSpotId: ID!) {
+              deleteVote(input: { crawlSpotId: $crawlSpotId }) {
+                errors
+              }
+            }
+          `,
+          variables: { crawlSpotId: crawlSpotId }
+        }),
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
         },
-        method: 'DELETE'
+        method: 'POST'
       })
     },
 
     refreshCrawl: function() {
-      fetch('/api/crawls/' + this.crawl.token, {
+      fetch('/graphql', {
         headers: {
           'content-type': 'application/json',
           Authorization: 'Bearer ' + this.userUuid
-        }
+        },
+        body: JSON.stringify({
+          query: `
+            query Crawl($token: String!) {
+              crawl(token: $token) {
+                term
+                location
+                token
+                crawlSpots {
+                  areFetched
+                  nodes {
+                    id
+                    votes {
+                      totalCount
+                      areAnyByCurrentUser
+                    }
+                    spot {
+                      name
+                      rating
+                      reviewCount
+                      url
+                      imageUrl
+                      address1
+                      city
+                      state
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            token: this.crawl.token
+          },
+        }),
+        method: 'POST'
       }).then((response) => {
         return response.json()
-      }).then((data) => {
-        this.crawl = data
+      }).then((parsedResponse) => {
+        this.crawl = parsedResponse.data.crawl
       })
     }
   },
