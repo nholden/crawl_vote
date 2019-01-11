@@ -64,6 +64,62 @@ RSpec.describe "crawls" do
     expect(votes_data['areAnyByCurrentUser']).to eql true
   end
 
+  scenario "successfully fetching crawl data when location data is nil" do
+    spot = FactoryBot.create(:spot, address1: nil, city: nil, state: nil)
+    crawl_spot.update! spot: spot
+
+    query = <<-'GRAPHQL'
+      query Crawl($token: String!) {
+        crawl(token: $token) {
+          term
+          location
+          token
+          crawlSpots {
+            areFetched
+            nodes {
+              id
+              votes {
+                totalCount
+                areAnyByCurrentUser
+              }
+              spot {
+                name
+                rating
+                reviewCount
+                url
+                imageUrl
+                address1
+                city
+                state
+              }
+            }
+          }
+        }
+      }
+    GRAPHQL
+
+    post graphql_path,
+      params: {
+        query: query,
+        variables: {
+          token: crawl.token,
+        },
+      },
+      headers: {
+        'Authorization': "Bearer \"#{user_uuid}\"",
+      }
+
+    expect(response.status).to eql 200
+    expect(response.body).to_not include 'Cannot return null for non-nullable field'
+
+    crawl_spot_nodes = JSON.parse(response.body).dig('data', 'crawl', 'crawlSpots', 'nodes')
+    spot_data = crawl_spot_nodes.first['spot']
+    expect(spot_data['name']).to eql(spot.name)
+    expect(spot_data['address1']).to eql(nil)
+    expect(spot_data['city']).to eql(nil)
+    expect(spot_data['state']).to eql(nil)
+  end
+
   scenario "attempting to fetch crawl data without a user_uuid" do
     query = <<-'GRAPHQL'
       query Crawl($token: String!) {

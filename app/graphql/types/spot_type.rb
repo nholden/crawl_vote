@@ -8,9 +8,9 @@ module Types
     field :review_count, Integer, "How many Yelp reviews the spot has received", null: false
     field :url, String, "The Yelp URL of the spot", null: false
     field :image_url, String, "The URL to an image related to the spot", null: false
-    field :address1, String, "The first line of the spot's street address", null: false
-    field :city, String, "The city the spot is in", null: false
-    field :state, String, "The state/province the spot is in", null: false
+    field :address1, String, "The first line of the spot's street address", null: true
+    field :city, String, "The city the spot is in", null: true
+    field :state, String, "The state/province the spot is in", null: true
 
   end
 end
