@@ -13,7 +13,7 @@ bundle exec rake db:reset
 ```
 
 ## Getting started
-Sign up for a Pusher Channels app at  [https://pusher.com/signup](https://pusher.com/signup) and a Yelp API key at [https://www.yelp.com/developers/documentation/v3](https://www.yelp.com/developers/documentation/v3) and update `.env`.
+Sign up for a Pusher Channels app at [https://pusher.com/signup](https://pusher.com/signup) and a Google Places API key at [https://developers.google.com/maps/documentation/places/web-service/get-api-key](https://developers.google.com/maps/documentation/places/web-service/get-api-key) and update `.env`. Enable Places API (New) for that key.
 
 Start these long-running processes in separate terminal windows:
 
