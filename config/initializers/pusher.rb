@@ -3,4 +3,5 @@ Pusher.key = ENV.fetch('PUSHER_KEY')
 Pusher.secret = ENV.fetch('PUSHER_SECRET')
 Pusher.cluster = ENV.fetch('PUSHER_CLUSTER')
 Pusher.logger = Rails.logger
-Pusher.encrypted = true unless Rails.env.test?
+# Pusher 2 defaults to TLS. pusher-fake serves plain HTTP in test.
+Pusher.encrypted = !Rails.env.test?

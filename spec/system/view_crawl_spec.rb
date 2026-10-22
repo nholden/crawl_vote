@@ -14,16 +14,16 @@ RSpec.describe "view crawl" do
       spot = FactoryBot.create(:spot)
       FactoryBot.create(:crawl_spot, crawl: crawl, spot: spot)
 
-      visit root_url
+      visit root_path
       click_link 'Join a crawl'
       fill_in 'Code', with: crawl.token
       click_button 'Join Crawl'
 
-      expect(page).to have_text spot.name.upcase
+      expect(page).to have_text spot.name
     end
 
     scenario "viewing an existing crawl without any spots" do
-      visit root_url
+      visit root_path
       click_link 'Join a crawl'
       fill_in 'Code', with: crawl.token
       click_button 'Join Crawl'
@@ -36,7 +36,7 @@ RSpec.describe "view crawl" do
     let(:spots_fetched) { false }
 
     scenario "viewing an existing crawl" do
-      visit root_url
+      visit root_path
       click_link 'Join a crawl'
       fill_in 'Code', with: crawl.token
       click_button 'Join Crawl'

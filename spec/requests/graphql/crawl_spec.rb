@@ -213,7 +213,7 @@ RSpec.describe "crawls" do
       }
 
     expect(response.status).to eql 200
-    expect(response.body).to include "Variable term of type String! was provided invalid value"
+    expect(response.body).to include "Variable $term of type String! was provided invalid value"
   end
 
   scenario "attempting to create a crawl without a location" do
@@ -239,7 +239,7 @@ RSpec.describe "crawls" do
       }
 
     expect(response.status).to eql 200
-    expect(response.body).to include "Variable location of type String! was provided invalid value"
+    expect(response.body).to include "Variable $location of type String! was provided invalid value"
   end
 
   scenario "attempting to create a crawl without a user_uuid" do
