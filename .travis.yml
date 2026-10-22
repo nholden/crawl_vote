@@ -1,7 +1,7 @@
 sudo: required
 language: ruby
 rvm:
-  - 4.0.8
+  - 4.0.7
 install:
   - . $HOME/.nvm/nvm.sh
   - nvm install $NODE_VERSION
