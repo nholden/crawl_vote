@@ -19,7 +19,8 @@ RSpec.describe "view crawl" do
       fill_in 'Code', with: crawl.token
       click_button 'Join Crawl'
 
-      expect(page).to have_text spot.name
+      # The spot name is rendered with Tailwind's uppercase utility.
+      expect(page).to have_text(/#{Regexp.escape(spot.name)}/i)
     end
 
     scenario "viewing an existing crawl without any spots" do

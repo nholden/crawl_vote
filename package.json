@@ -1,25 +1,36 @@
 {
   "name": "crawl_vote",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
-    "@rails/webpacker": "3.5",
-    "lodash": "^4.17.10",
+    "compression-webpack-plugin": "^11.1.0",
+    "css-loader": "^7.1.2",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.9.2",
+    "postcss": "7.0.39",
+    "postcss-cssnext": "3.1.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "4.3.0",
     "pug": "^2.0.3",
-    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.1.0",
     "pusher-js": "^4.2.2",
     "rails-ujs": "^5.2.0",
-    "tailwindcss": "^0.5.3",
+    "sass": "1.77.8",
+    "sass-loader": "^16.0.5",
+    "shakapacker": "10.3.2",
+    "tailwindcss": "0.5.3",
+    "terser-webpack-plugin": "^5.3.14",
     "turbolinks": "^5.1.1",
-    "vue": "^2.5.16",
+    "vue": "2.7.16",
     "vue-clipboard2": "^0.1.0",
-    "vue-loader": "14.2.2",
-    "vue-template-compiler": "^2.5.16",
-    "vue-turbolinks": "^2.0.3"
+    "vue-loader": "15.11.1",
+    "vue-template-compiler": "2.7.16",
+    "vue-turbolinks": "^2.0.3",
+    "webpack": "^5.101.0",
+    "webpack-assets-manifest": "^6.0.2",
+    "webpack-cli": "^6.0.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "2.11.2"
-  },
-  "resolutions": {
-    "node-sass": "file:vendor/node-sass"
+    "webpack-dev-server": "^5.2.2"
   }
 }

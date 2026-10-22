@@ -6,7 +6,7 @@ ruby `cat .ruby-version`.chomp
 gem 'rails', '~> 8.1.4'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 6.4'
-gem 'webpacker', '~> 5.4'
+gem 'shakapacker', '10.3.2'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.18.0', require: false
 gem 'haml'
