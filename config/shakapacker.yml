@@ -1,0 +1,54 @@
+# Note: You must restart bin/shakapacker-dev-server for changes to take effect.
+
+default: &default
+  source_path: app/javascript
+  source_entry_path: packs
+  nested_entries: false
+  css_extract_ignore_order_warnings: false
+  # Match css-loader 6: a default export, rather than named-only exports.
+  css_modules_export_mode: default
+  public_root_path: public
+  public_output_path: packs
+  cache_path: tmp/shakapacker
+  webpack_compile_output: true
+  webpack_compile_flags: []
+  shakapacker_precompile: true
+  additional_paths: []
+  cache_manifest: false
+  javascript_transpiler: "none"
+  assets_bundler: webpack
+  ensure_consistent_versioning: true
+  compiler_strategy: digest
+  useContentHash: true
+  integrity:
+    enabled: false
+  early_hints:
+    enabled: false
+
+development:
+  <<: *default
+  compile: true
+  compiler_strategy: mtime
+  useContentHash: false
+  dev_server:
+    host: localhost
+    port: 3035
+    hmr: false
+    inline_css: true
+    client:
+      overlay: true
+    compress: true
+    allowed_hosts: "auto"
+    pretty: true
+
+test:
+  <<: *default
+  compile: true
+  public_output_path: packs-test
+
+production:
+  <<: *default
+  compile: false
+  cache_manifest: true
+  early_hints:
+    enabled: false

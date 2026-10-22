@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 const yelpStarsContextModule = require.context('./images/yelp_stars', true, /\.png$/)
 
 export default {
