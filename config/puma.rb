@@ -9,7 +9,14 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port        ENV.fetch("PORT") { 3000 }
+# Laravel Cloud's health checks reach the app over IPv6. `port` listens on
+# IPv4 only, so production binds the IPv6 wildcard instead.
+port_number = ENV.fetch("PORT") { 3000 }
+if ENV["RAILS_ENV"] == "production"
+  bind "tcp://[::]:#{port_number}"
+else
+  port port_number
+end
 
 # Specifies the `environment` that Puma will run in.
 #

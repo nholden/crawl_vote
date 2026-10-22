@@ -58,3 +58,10 @@ development:
 test:
   <<: *default
   database: crawl_vote_test
+
+# Laravel Cloud injects DATABASE_URL and merges it into this connection.
+# Leave url unset so that injected URL stays the source of the host and credentials.
+production:
+  primary:
+    <<: *default
+    database: crawl_vote_production
