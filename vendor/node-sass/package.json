@@ -1,0 +1,11 @@
+{
+  "name": "node-sass",
+  "version": "4.9.0",
+  "private": true,
+  "description": "Dart Sass stand-in for node-sass. node-sass 4 cannot build on Node 26.",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "sass": "1.77.8"
+  }
+}
