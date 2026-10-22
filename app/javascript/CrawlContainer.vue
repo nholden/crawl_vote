@@ -127,6 +127,8 @@ export default {
                       reviewCount
                       url
                       imageUrl
+                      imageAttribution
+                      imageAttributionUrl
                       address1
                       city
                       state

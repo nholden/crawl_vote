@@ -4,25 +4,27 @@ class CrawlSpotWorker
 
   def perform(crawl_id)
     crawl = Crawl.find(crawl_id)
-    businesses = Yelp::BusinessSearch.new(term: crawl.term, location: crawl.location).businesses
+    places = GooglePlaces::TextSearch.new(term: crawl.term, location: crawl.location).places
 
-    businesses.each do |business|
-      spot = Spot.find_or_initialize_by(yelp_id: business.id)
-      spot.name = business.name
-      spot.image_url = business.image_url
-      spot.url = business.url
-      spot.review_count = business.review_count
-      spot.rating = business.rating
-      spot.price = business.price
-      spot.address1 = business.address1
-      spot.address2 = business.address2
-      spot.address3 = business.address3
-      spot.city = business.city
-      spot.state = business.state
-      spot.zip_code = business.zip_code
-      spot.country = business.country
+    places.each do |place|
+      spot = Spot.find_or_initialize_by(google_place_id: place.id)
+      spot.name = place.name
+      spot.image_url = place.image_url
+      spot.image_attribution = place.image_attribution
+      spot.image_attribution_url = place.image_attribution_url
+      spot.url = place.url
+      spot.review_count = place.review_count
+      spot.rating = place.rating
+      spot.price = place.price
+      spot.address1 = place.address1
+      spot.address2 = place.address2
+      spot.address3 = place.address3
+      spot.city = place.city
+      spot.state = place.state
+      spot.zip_code = place.zip_code
+      spot.country = place.country
       spot.save! if spot.changed?
-      crawl.spots << spot
+      crawl.crawl_spots.find_or_create_by!(spot: spot)
     end
 
     crawl.spots_fetched = true
