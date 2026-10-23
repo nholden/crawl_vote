@@ -24,18 +24,11 @@
   dialog.share-qr(
     :id="shareQrId"
     closedby="any"
-    :aria-labelledby="shareQrTitleId"
-    :aria-describedby="shareQrHintId")
-    .share-qr__panel.bg-white.rounded.shadow-lg.text-center.border-t-4.border-blue
-      .flex.items-center.justify-between
-        h2.m-0.text-left.text-lg.font-medium.text-blue.tracking-wide(:id="shareQrTitleId") Share this crawl
-        button.share-qr__close(type="button" command="close" :commandfor="shareQrId") Close
-      .share-qr__hint.pt-2.text-sm.text-grey-darker(:id="shareQrHintId") Scan this code to join the vote.
-      .share-qr__code(:aria-busy="qrBusy ? 'true' : 'false'")
-        img(v-if="qrDataUrl" :src="qrDataUrl" alt="QR code for the share link" width="480" height="480")
-        .text-sm.text-red(v-else-if="qrError" role="alert") {{ qrError }}
-        .text-sm.text-grey-darker(v-else) Preparing QR code…
-      .share-qr__url.pt-3.text-xs.text-grey-darker {{ shareUrl }}
+    aria-label="QR code for the share link"
+    v-on:click="dismissShareQr")
+    img(v-if="qrDataUrl" :src="qrDataUrl" alt="" width="480" height="480")
+    p.share-qr__status.text-sm.text-red(v-else-if="qrError" role="alert") {{ qrError }}
+    p.share-qr__status.text-sm.text-grey-darker(v-else) Preparing QR code…
 </template>
 
 <script>
@@ -84,10 +77,7 @@ export default {
       var base = window.location.origin.replace(/\/$/, '')
       return base + '/crawls/' + this.crawl.token
     },
-    shareQrId: function() { return 'share-qr-' + this.crawl.token },
-    shareQrTitleId: function() { return 'share-qr-title-' + this.crawl.token },
-    shareQrHintId: function() { return 'share-qr-hint-' + this.crawl.token },
-    qrBusy: function() { return !this.qrDataUrl && !this.qrError }
+    shareQrId: function() { return 'share-qr-' + this.crawl.token }
   },
 
   methods: {
@@ -146,6 +136,11 @@ export default {
       this.shareLinkStatusTimer = setTimeout(function() {
         self.shareLinkStatus = null
       }, 2000)
+    },
+
+    dismissShareQr: function(event) {
+      if (event.target !== event.currentTarget) return
+      event.currentTarget.close()
     },
 
     ensureShareQr: function() {
@@ -255,98 +250,33 @@ export default {
 }
 
 .share-qr {
-  width: min(24rem, calc(100vw - 2rem));
+  width: fit-content;
+  height: fit-content;
   max-width: calc(100vw - 2rem);
-  max-height: calc(100vh - 3rem);
-  padding: 0;
+  max-height: calc(100vh - 2rem);
+  margin: auto;
+  padding: 0.75rem;
   border: none;
-  background: transparent;
+  border-radius: 0.25rem;
+  background: #fff;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
   color: #22292f;
-  overflow: auto;
-  overscroll-behavior: contain;
 }
 
 .share-qr::backdrop {
   background: rgba(34, 41, 47, 0.55);
 }
 
-.share-qr__panel {
-  width: 100%;
-  padding: 1rem;
-}
-
-@media (max-width: 30rem) {
-  .share-qr__panel {
-    padding: 0.75rem 0.75rem 1rem;
-  }
-}
-
-.share-qr__close {
-  flex: none;
-  border: 0;
-  border-radius: 0.25rem;
-  background: transparent;
-  color: #2779bd;
-  cursor: pointer;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  padding: 0.75rem 0.5rem;
-  text-transform: uppercase;
-}
-
-.share-qr__close:hover {
-  color: #1c3d5a;
-}
-
-.share-qr__close:focus {
-  color: #1c3d5a;
-  outline: 2px solid #3490dc;
-  outline-offset: 2px;
-}
-
-.share-qr__code {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 10rem;
-  margin-top: 0.75rem;
-}
-
-.share-qr__code img {
+.share-qr img {
   display: block;
-  width: min(16rem, 100%);
+  width: auto;
   height: auto;
+  max-width: min(16rem, calc(100vw - 4rem));
+  max-height: calc(100vh - 4rem);
 }
 
-@media (max-height: 32rem) {
-  .share-qr__panel {
-    padding: 0.5rem 0.75rem;
-  }
-
-  .share-qr__close {
-    padding: 0.35rem 0.5rem;
-  }
-
-  .share-qr__hint {
-    padding-top: 0.25rem;
-  }
-
-  .share-qr__code {
-    min-height: 0;
-    margin-top: 0.35rem;
-  }
-
-  .share-qr__code img {
-    width: min(10rem, 100%);
-  }
-
-  .share-qr__url {
-    padding-top: 0.35rem;
-  }
-}
-
-.share-qr__url {
-  word-break: break-all;
+.share-qr__status {
+  margin: 0;
+  max-width: 16rem;
 }
 </style>

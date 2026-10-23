@@ -61,14 +61,10 @@ RSpec.describe "view crawl" do
       dialog = find('dialog[open]')
       expect(dialog['id']).to eq(dialog_id)
       expect(dialog['closedby']).to eq('any')
-      expect(dialog).to have_button('Close')
-      expect(dialog.find_button('Close')['command']).to eq('close')
-      expect(dialog.find_button('Close')['commandfor']).to eq(dialog_id)
-      expect(dialog).to have_text('Share this crawl')
-      expect(dialog).to have_text('Scan this code to join the vote.')
-      expect(dialog).to have_text(page.current_url)
+      expect(dialog['aria-label']).to eq('QR code for the share link')
+      expect(dialog.text).to eq('')
 
-      qr = dialog.find('img[alt="QR code for the share link"]')
+      qr = dialog.find('img')
       expect(qr['src']).to start_with('data:image/png;base64,')
       expect(qr['src'].length).to be > 500
 
@@ -82,7 +78,7 @@ RSpec.describe "view crawl" do
         expect(rect.y).to be >= -1
         expect(rect.x + rect.width).to be <= viewport_width + 1
         expect(rect.y + rect.height).to be <= viewport_height + 1
-        expect(qr_rect.width).to be >= 140
+        expect(qr_rect.width).to be >= 120
         expect(qr_rect.x).to be >= rect.x - 1
         expect(qr_rect.x + qr_rect.width).to be <= rect.x + rect.width + 1
         expect(page.evaluate_script("document.querySelector('dialog[open]').scrollHeight <= document.querySelector('dialog[open]').clientHeight + 1")).to eq(true)
@@ -90,10 +86,6 @@ RSpec.describe "view crawl" do
 
       page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
       page.current_window.resize_to(1100, 800)
-      click_button 'Close'
-      expect(page).not_to have_css('dialog[open]')
-
-      click_button 'Show QR code'
       find('dialog[open]').send_keys(:escape)
       expect(page).not_to have_css('dialog[open]')
 
