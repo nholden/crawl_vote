@@ -32,6 +32,42 @@ RSpec.describe "view crawl" do
       expect(page).to have_button('Copied!')
     end
 
+    scenario "sharing a crawl with a QR code" do
+      visit root_path
+      click_link 'Join a crawl'
+      fill_in 'Code', with: crawl.token
+      click_button 'Join Crawl'
+
+      expect(page).to have_text 'Couldn’t find coffee in Javaville, USA'
+      expect(page).not_to have_css('dialog[open]')
+
+      click_button 'Show QR code'
+
+      dialog = find('dialog[open]')
+      expect(dialog['closedby']).to eq('any')
+      expect(dialog).to have_text('Share this crawl')
+      expect(dialog).to have_text('Scan this code to join the vote.')
+      expect(dialog).to have_text(page.current_url)
+
+      qr = dialog.find('img[alt="QR code for the share link"]')
+      expect(qr['src']).to start_with('data:image/png;base64,')
+      expect(qr['src'].length).to be > 500
+
+      click_button 'Close'
+      expect(page).not_to have_css('dialog[open]')
+
+      click_button 'Show QR code'
+      find('dialog[open]').send_keys(:escape)
+      expect(page).not_to have_css('dialog[open]')
+
+      click_button 'Show QR code'
+      page.driver.browser.action.move_to_location(8, 8).click.perform
+      expect(page).not_to have_css('dialog[open]')
+
+      click_button 'Copy share link'
+      expect(page).to have_button('Copied!')
+    end
+
     scenario "viewing an existing crawl without any spots" do
       visit root_path
       click_link 'Join a crawl'
