@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "view crawl" do
 
+  def set_viewport(width, height)
+    page.driver.browser.execute_cdp(
+      "Emulation.setDeviceMetricsOverride",
+      width: width,
+      height: height,
+      deviceScaleFactor: 1,
+      mobile: width < 768
+    )
+  end
+
   let!(:crawl) { FactoryBot.create(:crawl,
                                    spots_fetched: spots_fetched,
                                    term: 'coffee',
@@ -41,10 +51,19 @@ RSpec.describe "view crawl" do
       expect(page).to have_text 'Couldn’t find coffee in Javaville, USA'
       expect(page).not_to have_css('dialog[open]')
 
+      show_qr = find_button('Show QR code')
+      dialog_id = show_qr['commandfor']
+      expect(show_qr['command']).to eq('show-modal')
+      expect(dialog_id).to be_present
+
       click_button 'Show QR code'
 
       dialog = find('dialog[open]')
+      expect(dialog['id']).to eq(dialog_id)
       expect(dialog['closedby']).to eq('any')
+      expect(dialog).to have_button('Close')
+      expect(dialog.find_button('Close')['command']).to eq('close')
+      expect(dialog.find_button('Close')['commandfor']).to eq(dialog_id)
       expect(dialog).to have_text('Share this crawl')
       expect(dialog).to have_text('Scan this code to join the vote.')
       expect(dialog).to have_text(page.current_url)
@@ -53,6 +72,24 @@ RSpec.describe "view crawl" do
       expect(qr['src']).to start_with('data:image/png;base64,')
       expect(qr['src'].length).to be > 500
 
+      [[360, 700], [320, 568], [740, 360]].each do |width, height|
+        set_viewport(width, height)
+        rect = dialog.rect
+        qr_rect = qr.rect
+        viewport_width, viewport_height = page.evaluate_script('[window.innerWidth, window.innerHeight]')
+
+        expect(rect.x).to be >= -1
+        expect(rect.y).to be >= -1
+        expect(rect.x + rect.width).to be <= viewport_width + 1
+        expect(rect.y + rect.height).to be <= viewport_height + 1
+        expect(qr_rect.width).to be >= 140
+        expect(qr_rect.x).to be >= rect.x - 1
+        expect(qr_rect.x + qr_rect.width).to be <= rect.x + rect.width + 1
+        expect(page.evaluate_script("document.querySelector('dialog[open]').scrollHeight <= document.querySelector('dialog[open]').clientHeight + 1")).to eq(true)
+      end
+
+      page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
+      page.current_window.resize_to(1100, 800)
       click_button 'Close'
       expect(page).not_to have_css('dialog[open]')
 

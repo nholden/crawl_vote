@@ -19,21 +19,18 @@
     div(class="w-full md:w-1/2")
       button.btn.btn--active.w-full(type="button" v-clipboard:copy="shareUrl" v-clipboard:success="onShareLinkCopied" v-clipboard:error="onShareLinkCopyFailed" :data-share-url="shareUrl" aria-live="polite")
         | {{ shareLinkStatus || 'Copy share link' }}
-      button.btn.btn--quiet.w-full.mt-2(type="button" v-on:click="openShareQr" aria-haspopup="dialog" :aria-controls="shareQrId" :aria-expanded="shareQrOpen ? 'true' : 'false'")
+      button.btn.btn--quiet.w-full.mt-2(type="button" command="show-modal" :commandfor="shareQrId")
         | Show QR code
   dialog.share-qr(
-    ref="shareQrDialog"
     :id="shareQrId"
     closedby="any"
     :aria-labelledby="shareQrTitleId"
-    :aria-describedby="shareQrHintId"
-    v-on:click="onShareQrDialogClick"
-    v-on:close="onShareQrClosed")
-    .share-qr__panel.bg-white.rounded.shadow-lg.p-4.text-center.border-t-4.border-blue(v-on:click.stop)
+    :aria-describedby="shareQrHintId")
+    .share-qr__panel.bg-white.rounded.shadow-lg.text-center.border-t-4.border-blue
       .flex.items-center.justify-between
         h2.m-0.text-left.text-lg.font-medium.text-blue.tracking-wide(:id="shareQrTitleId") Share this crawl
-        button.share-qr__close(type="button" v-on:click="closeShareQr") Close
-      .pt-2.text-sm.text-grey-darker(:id="shareQrHintId") Scan this code to join the vote.
+        button.share-qr__close(type="button" command="close" :commandfor="shareQrId") Close
+      .share-qr__hint.pt-2.text-sm.text-grey-darker(:id="shareQrHintId") Scan this code to join the vote.
       .share-qr__code(:aria-busy="qrBusy ? 'true' : 'false'")
         img(v-if="qrDataUrl" :src="qrDataUrl" alt="QR code for the share link" width="480" height="480")
         .text-sm.text-red(v-else-if="qrError" role="alert") {{ qrError }}
@@ -75,7 +72,6 @@ export default {
       },
       shareLinkStatus: null,
       shareLinkStatusTimer: null,
-      shareQrOpen: false,
       qrDataUrl: null,
       qrError: null,
       qrRequest: null
@@ -152,40 +148,6 @@ export default {
       }, 2000)
     },
 
-    openShareQr: function() {
-      var dialog = this.$refs.shareQrDialog
-      if (!dialog) return
-      this.ensureShareQr()
-      if (typeof dialog.showModal === 'function') {
-        if (!dialog.open) dialog.showModal()
-      } else if (!dialog.hasAttribute('open')) {
-        dialog.setAttribute('open', 'open')
-      }
-      this.shareQrOpen = true
-    },
-
-    closeShareQr: function() {
-      var dialog = this.$refs.shareQrDialog
-      if (!dialog) return
-      if (typeof dialog.close === 'function') {
-        if (dialog.open) dialog.close()
-      } else {
-        dialog.removeAttribute('open')
-        this.shareQrOpen = false
-      }
-    },
-
-    onShareQrDialogClick: function(event) {
-      if (event.target !== this.$refs.shareQrDialog) return
-      event.preventDefault()
-      event.stopPropagation()
-      this.closeShareQr()
-    },
-
-    onShareQrClosed: function() {
-      this.shareQrOpen = false
-    },
-
     ensureShareQr: function() {
       if (this.qrDataUrl || this.qrRequest) return
       var self = this
@@ -259,10 +221,11 @@ export default {
 
   beforeDestroy: function() {
     clearTimeout(this.shareLinkStatusTimer)
-    this.closeShareQr()
   },
 
   mounted: function() {
+    this.ensureShareQr()
+
     if (window.env.PUSHER_LOG_TO_CONSOLE === 'true') {
       Pusher.logToConsole = true
     }
@@ -294,10 +257,13 @@ export default {
 .share-qr {
   width: min(24rem, calc(100vw - 2rem));
   max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 3rem);
   padding: 0;
   border: none;
   background: transparent;
   color: #22292f;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .share-qr::backdrop {
@@ -306,9 +272,17 @@ export default {
 
 .share-qr__panel {
   width: 100%;
+  padding: 1rem;
+}
+
+@media (max-width: 30rem) {
+  .share-qr__panel {
+    padding: 0.75rem 0.75rem 1rem;
+  }
 }
 
 .share-qr__close {
+  flex: none;
   border: 0;
   border-radius: 0.25rem;
   background: transparent;
@@ -335,15 +309,41 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 12rem;
-  margin-top: 1rem;
+  min-height: 10rem;
+  margin-top: 0.75rem;
 }
 
 .share-qr__code img {
   display: block;
-  width: 16rem;
-  max-width: 100%;
+  width: min(16rem, 100%);
   height: auto;
+}
+
+@media (max-height: 32rem) {
+  .share-qr__panel {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .share-qr__close {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .share-qr__hint {
+    padding-top: 0.25rem;
+  }
+
+  .share-qr__code {
+    min-height: 0;
+    margin-top: 0.35rem;
+  }
+
+  .share-qr__code img {
+    width: min(10rem, 100%);
+  }
+
+  .share-qr__url {
+    padding-top: 0.35rem;
+  }
 }
 
 .share-qr__url {
