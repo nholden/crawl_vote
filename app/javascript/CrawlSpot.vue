@@ -8,15 +8,14 @@
       .h-full(v-else style="min-height: 8rem; background: #f5f5f5;")
     .p-4.pb-0(class="w-1/2")
       .font-medium.text-blue.uppercase.tracking-wide.pb-1(class="text-sm md:text-base")
-        | {{ spot.name }}
+        a.spot-name(:href="spot.url" target="_blank" rel="noopener noreferrer")
+          | {{ spot.name }}
       .text-sm.pb-2 {{ address }}
       .text-center
         .pb-1(v-if="spot.rating != null" :aria-label="'Rated ' + spot.rating + ' out of 5'" style="position: relative; display: inline-block; font-size: 18px; line-height: 1; letter-spacing: 2px;")
           span(aria-hidden="true" style="color: #e0e0e0;") ★★★★★
           span(aria-hidden="true" :style="filledStarsStyle") ★★★★★
         .text-sm.text-grey-darker(v-if="spot.reviewCount != null") Based on {{ spot.reviewCount }} reviews
-        .pt-2
-          a(:href="spot.url" target="_blank" rel="noopener noreferrer" translate="no" style="font-family: Roboto, Sans-Serif; font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: normal; white-space: nowrap; color: #5E5E5E;") Google Maps
     .flex.flex-wrap.pr-4.text-center(class="w-full md:w-1/6 pt-4 md:pt-0 my-0 md:my-6")
       .pb-3(class="w-1/3 md:w-full")
         .text-xl.font-medium
@@ -107,3 +106,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+a.spot-name {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.spot-name:hover {
+  text-decoration: underline;
+}
+</style>
