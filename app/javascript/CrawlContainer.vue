@@ -16,8 +16,8 @@
     div(class="w-full md:w-1/2 pb-6 md:pb-0")
       | Invite friends to vote using code
       .pt-2.text-lg.text-blue.tracking-wide {{ crawl.token }}
-    button.btn.btn--active(class="w-full md:w-1/2" type="button" v-clipboard:copy="shareUrl")
-      | Copy share link
+    button.btn.btn--active(class="w-full md:w-1/2" type="button" v-clipboard:copy="shareUrl" v-clipboard:success="onShareLinkCopied" v-clipboard:error="onShareLinkCopyFailed" :data-share-url="shareUrl" aria-live="polite")
+      | {{ shareLinkStatus || 'Copy share link' }}
 </template>
 
 <script>
@@ -51,12 +51,17 @@ export default {
           areFetched: false
         },
       },
+      shareLinkStatus: null,
+      shareLinkStatusTimer: null
     }
   },
 
   computed: {
     pusherChannelName: function() { return 'crawl-' + this.crawl.token },
-    shareUrl: function() { return window.env.BASE_URL + '/crawls/' + this.crawl.token }
+    shareUrl: function() {
+      var base = window.location.origin.replace(/\/$/, '')
+      return base + '/crawls/' + this.crawl.token
+    }
   },
 
   methods: {
@@ -98,6 +103,23 @@ export default {
         },
         method: 'POST'
       })
+    },
+
+    onShareLinkCopied: function() {
+      this.showShareLinkStatus('Copied!')
+    },
+
+    onShareLinkCopyFailed: function() {
+      this.showShareLinkStatus('Couldn’t copy link')
+    },
+
+    showShareLinkStatus: function(message) {
+      this.shareLinkStatus = message
+      clearTimeout(this.shareLinkStatusTimer)
+      var self = this
+      this.shareLinkStatusTimer = setTimeout(function() {
+        self.shareLinkStatus = null
+      }, 2000)
     },
 
     refreshCrawl: function() {
@@ -149,6 +171,10 @@ export default {
         this.crawl = parsedResponse.data.crawl
       })
     }
+  },
+
+  beforeDestroy: function() {
+    clearTimeout(this.shareLinkStatusTimer)
   },
 
   mounted: function() {
