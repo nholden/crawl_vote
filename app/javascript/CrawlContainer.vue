@@ -310,20 +310,25 @@ export default {
 
 .share-qr__close {
   border: 0;
+  border-radius: 0.25rem;
   background: transparent;
   color: #2779bd;
   cursor: pointer;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   line-height: 1;
-  min-height: 2.75rem;
-  padding: 0 0.25rem;
+  padding: 0.75rem 0.5rem;
   text-transform: uppercase;
 }
 
-.share-qr__close:hover,
+.share-qr__close:hover {
+  color: #1c3d5a;
+}
+
 .share-qr__close:focus {
   color: #1c3d5a;
+  outline: 2px solid #3490dc;
+  outline-offset: 2px;
 }
 
 .share-qr__code {
