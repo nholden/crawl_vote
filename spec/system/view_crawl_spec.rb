@@ -22,7 +22,7 @@ RSpec.describe "view crawl" do
       # The spot name is rendered with Tailwind's uppercase utility.
       expect(page).to have_text(/#{Regexp.escape(spot.name)}/i)
       expect(page).to have_text("Based on #{spot.review_count} reviews")
-      expect(page).to have_link(spot.name, href: spot.url)
+      expect(page).to have_link('Google Maps', href: spot.url)
       expect(page).to have_css(%([aria-label="Rated #{spot.rating} out of 5"]))
 
       share_button = find_button('Copy share link')
