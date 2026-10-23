@@ -24,6 +24,12 @@ RSpec.describe "view crawl" do
       expect(page).to have_text("Based on #{spot.review_count} reviews")
       expect(page).to have_link('Google Maps', href: spot.url)
       expect(page).to have_css(%([aria-label="Rated #{spot.rating} out of 5"]))
+
+      share_button = find_button('Copy share link')
+      expect(share_button['data-share-url']).to eq(page.current_url)
+
+      share_button.click
+      expect(page).to have_button('Copied!')
     end
 
     scenario "viewing an existing crawl without any spots" do
