@@ -28,6 +28,8 @@ jobs:
 
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/crawl_vote_test
+      # maintain_test_schema! shells out to bin/rails, and Spring won't boot the test env.
+      DISABLE_SPRING: 1
       # The Pusher initializer fetches these, and pusher-js throws on a blank key.
       PUSHER_APP_ID: test
       PUSHER_KEY: test
