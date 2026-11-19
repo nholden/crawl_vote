@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: crawl_vote_test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/crawl_vote_test
+      # The Pusher initializer fetches these, and pusher-js throws on a blank key.
+      PUSHER_APP_ID: test
+      PUSHER_KEY: test
+      PUSHER_SECRET: test
+      PUSHER_CLUSTER: mt1
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: bundle exec rspec
